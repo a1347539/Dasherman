@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dc3cb994fb9ad44aae1efb9ed8d5947, type: 3}
+  m_Name: BasicArrow
+  m_EditorClassIdentifier: 
+  arrowPrefab: {fileID: 8912385665241777861, guid: 0bfa017ca4e27f74a9f635c6bcb1357f, type: 3}
+  damage: 5
+  speed: 16

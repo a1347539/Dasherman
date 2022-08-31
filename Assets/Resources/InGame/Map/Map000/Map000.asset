@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4d2de415dc77fb4fb5f9ef16245d92e, type: 3}
+  m_Name: Map000
+  m_EditorClassIdentifier: 
+  mapIndex: 0
+  mapName: Map000
+  mapPrefab: {fileID: 6384596238378240242, guid: 53392aa89cda12f478010d3a7f4d51f2, type: 3}
+  playableMapSize: {x: 22, y: 12}
+  breakableTilePrefabs: []
+  mapInitPoints: {fileID: 4900000, guid: 7d77d77c353bc1049b363b9be846a1f3, type: 3}

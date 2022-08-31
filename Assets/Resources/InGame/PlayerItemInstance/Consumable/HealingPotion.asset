@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4370685c9196d944ba570c960539c49, type: 3}
+  m_Name: HealingPotion
+  m_EditorClassIdentifier: 
+  itemPrefab: {fileID: 4643972750949845557, guid: 579fef64c44cca84e975988fa541e53c, type: 3}
+  playerItemType: 0
+  playerItemID: 10
+  playerItemName: Healing Potion
+  playerItemDescription: 
+  target: 0
+  healthRecoveryRatio: 0.3
+  manaRecoveryRatio: 0
+  damageScaling: 0
+  defenceScaling: 0
+  duration: 0

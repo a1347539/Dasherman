@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - map.reachable
+  - map.unreachable
+  - characterDebug
+  - TeamManager
+  - CanvasContainer
+  - GameObjectContainer
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - UI.RoomView
+  - Map
+  - OtherPlayer
+  - Self
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Canvas
+    uniqueID: 3198091747
+    locked: 0
+  - name: Map
+    uniqueID: 2140401535
+    locked: 0
+  - name: PlayerCanvas
+    uniqueID: 307489323
+    locked: 0
+  - name: InGameObject
+    uniqueID: 4176861379
+    locked: 0
+  - name: PlayerOverlayUI
+    uniqueID: 123996173
+    locked: 0
+  - name: Excess
+    uniqueID: 2049727175
+    locked: 0

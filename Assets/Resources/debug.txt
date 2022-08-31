@@ -1,0 +1,32 @@
+{
+  "temp": [
+    [
+      {
+        "x": 0,
+        "y": -1,
+        "magnitude": 1.0,
+        "sqrMagnitude": 1
+      },
+      {
+        "x": 1,
+        "y": 1,
+        "magnitude": 1.41421354,
+        "sqrMagnitude": 2
+      }
+    ],
+    [
+      {
+        "x": -1,
+        "y": 0,
+        "magnitude": 1.0,
+        "sqrMagnitude": 1
+      }
+    ]
+  ],
+  "tempIndex": [
+    2,
+    3,
+    4,
+    5
+  ]
+}
