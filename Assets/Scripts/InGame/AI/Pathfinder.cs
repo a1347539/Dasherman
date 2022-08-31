@@ -7,7 +7,7 @@ public class Pathfinder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        // testing
     }
 
     // Update is called once per frame
