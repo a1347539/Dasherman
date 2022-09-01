@@ -10,9 +10,18 @@
 			<name></name>
 			<description></description>
 			<children>
-				<id>101</id>
-				<id>201</id>
-				<id>301</id>
+				<child>
+					<id>101</id>
+					<requisite>0</requisite>
+				</child>
+				<child>
+					<id>201</id>
+					<requisite>0</requisite>
+				</child>
+				<child>
+					<id>301</id>
+					<requisite>0</requisite>
+				</child>
 			</children>
 		</node>
 		<node>
@@ -23,7 +32,9 @@
 			<levelRequirement>3</levelRequirement>
 			<name></name>
 			<description></description>
-			<children></children>
+			<children>
+
+			</children>
 		</node>
 		<node>
 			<id>201</id>
@@ -33,7 +44,8 @@
 			<levelRequirement>3</levelRequirement>
 			<name></name>
 			<description></description>
-			<children></children>
+			<children>
+			</children>
 		</node>
 		<node>
 			<id>301</id>
@@ -43,7 +55,8 @@
 			<levelRequirement>3</levelRequirement>
 			<name></name>
 			<description></description>
-			<children></children>
+			<children>
+			</children>
 		</node>
 	</list>
 </adjacencyList>

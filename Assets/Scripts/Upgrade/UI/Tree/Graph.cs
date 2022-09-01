@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,34 +17,50 @@ namespace FYP.Upgrade
             private List<Node> children = new List<Node>();
             public int id { get; private set; }
             public GameObject prefab { get; private set; }
+            public NodeData nodeData { get; private set; }
 
             public Node(int id, Vector2 position) {
                 this.id = id;
                 prefab = Instantiate(GraphManager.Instance.upgradeNodePrefab, position, Quaternion.identity, GraphManager.Instance.nodeContainer);
-                prefab.GetComponent<UpgradeNode>().initialize(id);
+                print($"add {id}");
                 GraphManager.Instance.intNodePair[id] = this;
             }
-            public void addParent(Node u) { parents.Add(u); }
-            public void addChild(Node v) { children.Add(v); }
+            public void lateInitialize(NodeData data) {
+                nodeData = data;
+                prefab.GetComponent<UpgradeNode>().initialize(data);
+            }
+            public void addParent(Node u) {
+                parents.Add(u);
+            }
+            public void addChild(Node v) {
+                
+
+                children.Add(v);
+            }
         }
 
-        public Graph(Dictionary<int, Node> intNodePair) {
+        public Graph() {
             radius = 3;
         }
 
-        public void createGraph(List<List<int>> adjacencyList) {
-            createFirstFourNodes(adjacencyList);
+        public void createGraph(AdjacencyList adjacencyList) {
+            createRoot(adjacencyList.nodes[0]);
             int closeness = 17;
             float radiansDivided = 2 * Mathf.PI / closeness;
             float radians;
             float vertical;
             float horizontal;
-            for (int i = 1; i < adjacencyList.Count; ++i) {
-                Node root = GraphManager.Instance.intNodePair[adjacencyList[i][0]];
-                for (int j = 1; j < adjacencyList[i].Count; ++j) {
-                    if (adjacencyList[i][j] == 0) { continue; }
-                    if (GraphManager.Instance.intNodePair.ContainsKey(adjacencyList[i][j])) {
-                        addEdge(root, GraphManager.Instance.intNodePair[adjacencyList[i][j]]);
+            for (int i = 1; i < adjacencyList.nodes.Count; ++i)
+            {
+                print($"get {adjacencyList.nodes[i].Id}");
+                Node root = GraphManager.Instance.intNodePair[adjacencyList.nodes[i].Id];
+                root.lateInitialize(adjacencyList.nodes[i]);
+
+                for (int j = 0; j < adjacencyList.nodes[i].children.Count; ++j)
+                {
+                    if (GraphManager.Instance.intNodePair.ContainsKey(adjacencyList.nodes[i].children[j].Id))
+                    {
+                        addEdge(root, GraphManager.Instance.intNodePair[adjacencyList.nodes[i].children[j].Id]);
                         continue;
                     }
                     radians = radiansDivided * (2 * (j - 2) % closeness);
@@ -51,31 +68,35 @@ namespace FYP.Upgrade
                     vertical = Mathf.Cos(radians);
                     Vector3 vectorFromOrigin = new Vector2(horizontal, vertical) * radius;
                     Vector3 pos = root.prefab.transform.position + vectorFromOrigin;
-                    addEdge(root, new Node(adjacencyList[i][j], pos));
+                    addEdge(root, new Node(adjacencyList.nodes[i].children[j].Id, pos));
                 }
             }
 
         }
 
-        private void createFirstFourNodes(List<List<int>> adjacencyList) {
-            root = new Node(0, Vector2.zero);
+        private void createRoot(NodeData firstNode) {
             float radiansDivided = 2 * Mathf.PI / 3;
             float radians;
             float vertical;
             float horizontal;
-            for (int i = 1; i < adjacencyList[0].Count; ++i)
+
+            root = new Node(firstNode.Id, Vector2.zero);
+            root.lateInitialize(firstNode);
+
+            for (int i = 0; i < firstNode.children.Count; ++i)
             {
                 // the first node branch away evenly, thats why it is divided by 3
-                radians = radiansDivided * (i - 1);
+                radians = radiansDivided * i;
                 vertical = Mathf.Cos(radians);
                 horizontal = Mathf.Sin(radians);
                 Vector3 vectorFromOrigin = new Vector2(horizontal, vertical) * radius;
                 Vector3 pos = root.prefab.transform.position + vectorFromOrigin;
-                addEdge(root, new Node(adjacencyList[0][i], pos));
+                addEdge(root, new Node(firstNode.children[i].Id, pos));
             }
         }
 
         private void addEdge(Node u, Node v) {
+            // from u to v
             Vector2 posA = u.prefab.transform.position;
             Vector2 posB = v.prefab.transform.position;
             
@@ -93,6 +114,8 @@ namespace FYP.Upgrade
             float angle = (float)(Math.Atan2(posB.y - posA.y, posB.x - posA.x) * (180 / Math.PI));
 
             rectTransform.localEulerAngles = new Vector3(0, 0, angle);
+
+            u.addChild(v); v.addParent(u);
         }
 
 

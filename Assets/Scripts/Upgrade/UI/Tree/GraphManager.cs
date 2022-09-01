@@ -8,8 +8,10 @@ using static FYP.Upgrade.Graph;
 
 namespace FYP.Upgrade
 {
-        public class GraphManager : Singleton<GraphManager>
+    public class GraphManager : Singleton<GraphManager>
     {
+        public static Action<int> onUpgradeNodeClick = delegate { };
+
         [SerializeField]
         public Transform graphCanvas;
         [SerializeField]
@@ -24,7 +26,7 @@ namespace FYP.Upgrade
         public Dictionary<int, Node> intNodePair = new Dictionary<int, Node>();
 
         Graph graph;
-
+/*
         List<List<int>> adjacencyList = new List<List<int>> { 
             new List<int> { 0, 101, 201, 301 },
             new List<int> { 101, 102, 0, 103 },
@@ -42,15 +44,14 @@ namespace FYP.Upgrade
             new List<int> { 113 },
             new List<int> { 201 },
             new List<int> { 301 },
-        };
+        };*/
 
         void Start()
         {
             graphDatas = Resources.LoadAll<TextAsset>(GraphKeys.resourceObjectPathPrefix);
             AdjacencyList adjacencyList = XmlUtilities.load<AdjacencyList>(graphDatas[0]);
-            print(adjacencyList.nodes[1].Id);
-            //graph = new Graph(intNodePair);
-            //graph.createGraph(adjacencyList);
+            graph = new Graph();
+            graph.createGraph(adjacencyList);
             // testing
         }
 

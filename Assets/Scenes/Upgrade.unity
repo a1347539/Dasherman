@@ -250,7 +250,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1512382034}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -319,7 +319,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1512382034}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -458,6 +458,7 @@ MonoBehaviour:
   nodeContainer: {fileID: 562570685}
   lineContainer: {fileID: 898178654}
   upgradeNodePrefab: {fileID: 9158144415720485575, guid: 571b888425d4b664f84ff5bcd0081200, type: 3}
+  graphDatas: []
 --- !u!1 &1512382033
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,8 +490,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 562570685}
   - {fileID: 898178654}
+  - {fileID: 562570685}
   m_Father: {fileID: 571302459}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

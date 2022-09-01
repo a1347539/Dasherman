@@ -8,6 +8,8 @@ namespace FYP.Upgrade
     public class ChildNodeID {
         [XmlElement("id")]
         public int Id;
+        [XmlElement("requisite")]
+        public int requisite;
     }
 
     public class NodeData
@@ -27,8 +29,8 @@ namespace FYP.Upgrade
         [XmlElement("description")]
         public string description;
         [XmlArray("children")]
-        [XmlArrayItem("id")]
-        public List<ChildNodeID> children;
+        [XmlArrayItem("child")]
+        public List<ChildNodeID> children = new List<ChildNodeID>();
     }
 
     [XmlRoot("adjacencyList")]
