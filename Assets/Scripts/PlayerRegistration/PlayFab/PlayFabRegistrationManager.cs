@@ -33,7 +33,9 @@ namespace FYP.PlayerRegistration
             PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
             {
                 Data = new Dictionary<string, string> {
-                    { PlayFabKeys.PlayerClass, classID.ToString() }
+                    { PlayFabKeys.PlayerClass, classID.ToString() },
+                    { PlayFabKeys.PlayerLevel, "1" },
+                    { PlayFabKeys.PlayerGold, "300" }
                 }
             },
             (result) => { 

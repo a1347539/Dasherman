@@ -3,10 +3,11 @@
 	<list>
 		<node>
 			<id>0</id>
-			<upgrade>3</upgrade>
-			<value>0.2</value>
-			<cost>300</cost>
-			<levelRequirement>3</levelRequirement>
+			<upgradeType>0</upgradeType>
+			<value>0</value>
+			<cost>0</cost>
+			<levelRequirement>0</levelRequirement>
+			<maxLevel>0</maxLevel>
 			<name></name>
 			<description></description>
 			<children>
@@ -26,10 +27,37 @@
 		</node>
 		<node>
 			<id>101</id>
-			<upgrade>3</upgrade>
+			<upgradeType>3</upgradeType>
 			<value>0.2</value>
+			<cost>500</cost>
+			<levelRequirement>0</levelRequirement>
+			<maxLevel>3</maxLevel>
+			<name></name>
+			<description></description>
+			<children>
+				<child>
+					<id>0</id>
+				</child>
+				<child>
+					<id>102</id>
+					<requisite>2</requisite>
+				</child>
+				<child>
+					<id>0</id>
+				</child>
+				<child>
+					<id>103</id>
+					<requisite>0</requisite>
+				</child>
+			</children>
+		</node>
+		<node>
+			<id>102</id>
+			<upgradeType>3</upgradeType>
+			<value>0.1</value>
 			<cost>300</cost>
-			<levelRequirement>3</levelRequirement>
+			<levelRequirement>0</levelRequirement>
+			<maxLevel>3</maxLevel>
 			<name></name>
 			<description></description>
 			<children>
@@ -37,11 +65,24 @@
 			</children>
 		</node>
 		<node>
+			<id>103</id>
+			<upgradeType>3</upgradeType>
+			<value>0.2</value>
+			<cost>500</cost>
+			<levelRequirement>2</levelRequirement>
+			<maxLevel>3</maxLevel>
+			<name></name>
+			<description></description>
+			<children>
+			</children>
+		</node>
+		<node>
 			<id>201</id>
-			<upgrade>7</upgrade>
+			<upgradeType>7</upgradeType>
 			<value>0.3</value>
-			<cost>300</cost>
-			<levelRequirement>3</levelRequirement>
+			<cost>350</cost>
+			<levelRequirement>0</levelRequirement>
+			<maxLevel>3</maxLevel>
 			<name></name>
 			<description></description>
 			<children>
@@ -49,10 +90,11 @@
 		</node>
 		<node>
 			<id>301</id>
-			<upgrade>4</upgrade>
+			<upgradeType>4</upgradeType>
 			<value>0.2</value>
 			<cost>300</cost>
-			<levelRequirement>3</levelRequirement>
+			<levelRequirement>0</levelRequirement>
+			<maxLevel>3</maxLevel>
 			<name></name>
 			<description></description>
 			<children>

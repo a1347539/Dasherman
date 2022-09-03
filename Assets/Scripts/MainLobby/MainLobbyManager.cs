@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Photon.Pun;
+using PlayFab.ClientModels;
+using FYP.Global;
 
 namespace FYP.MainLobby
 {
@@ -30,7 +32,8 @@ namespace FYP.MainLobby
             NetworkManager.onGetPlayerClass -= handleGetPlayerClass;
         }
 
-        private void handleGetPlayerClass(int characterClassID) {
+        private void handleGetPlayerClass(Dictionary<string, UserDataRecord> keyValuePairs) {
+            int characterClassID = int.Parse(keyValuePairs[PlayFabKeys.PlayerClass].Value);
             playerCharacter = charactersDatas.First(data => data.characterId == characterClassID);
         }
     }

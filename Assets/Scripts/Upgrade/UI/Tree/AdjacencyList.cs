@@ -7,25 +7,27 @@ namespace FYP.Upgrade
 {
     public class ChildNodeID {
         [XmlElement("id")]
-        public int Id;
+        public int id;
         [XmlElement("requisite")]
-        public int requisite;
+        public int levelRequisite;
     }
 
     public class NodeData
     {
         [XmlElement("id")]
-        public int Id;
-        [XmlElement("upgrade")]
+        public int id;
+        [XmlElement("upgradeType")]
         public int upgradeType;
         [XmlElement("value")]
-        public float Value;
+        public float value;
         [XmlElement("cost")]
         public int cost;
         [XmlElement("levelRequirement")]
         public int levelRequirement;
+        [XmlElement("maxLevel")]
+        public int maxLevel;
         [XmlElement("name")]
-        public string Name;
+        public string name;
         [XmlElement("description")]
         public string description;
         [XmlArray("children")]

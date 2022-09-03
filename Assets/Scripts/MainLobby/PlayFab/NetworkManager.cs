@@ -10,23 +10,28 @@ namespace FYP.MainLobby
 {
     public class NetworkManager : Singleton<NetworkManager>
     {
-        public static Action<int> onGetPlayerClass = delegate { };
+        public static Action<Dictionary<string, UserDataRecord>> onGetPlayerClass = delegate { };
 
         private void Start()
         {
-            getPlayerClass();
+            getPlayerData();
         }
 
-        private void getPlayerClass() {
+        private void getPlayerData() {
             PlayFabClientAPI.GetUserData(new GetUserDataRequest
             {
-                Keys = new List<string> { PlayFabKeys.PlayerClass }
+                Keys = new List<string> { 
+                    PlayFabKeys.PlayerClass,
+                    PlayFabKeys.PlayerLevel,
+                    PlayFabKeys.PlayerGold,
+                    PlayFabKeys.PlayerExp,
+                }
             },
             (result) =>
             {
-                if (result.Data != null && result.Data.ContainsKey(PlayFabKeys.PlayerClass))
+                if (result.Data != null)
                 {
-                    onGetPlayerClass?.Invoke(Int32.Parse(result.Data[PlayFabKeys.PlayerClass].Value));
+                    onGetPlayerClass?.Invoke(result.Data);
                 }
             },
             onError

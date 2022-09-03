@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Photon.Pun;
+using static FYP.Global.InputUtilities;
 
 namespace FYP.InGame.UI
 {
@@ -165,7 +166,7 @@ namespace FYP.InGame.UI
 
         #region mouseControl 
 
-        private void handleDisplayWheelForMouseControl(InputManager.MouseButtonData mouseButtonData)
+        private void handleDisplayWheelForMouseControl(MouseButtonData mouseButtonData)
         {
             if (!isInitialized) return;
             if (InputManager.isFKeyPressed && (
@@ -181,7 +182,7 @@ namespace FYP.InGame.UI
             }
         }
 
-        private void handleSelectItemForMouseControl(InputManager.MouseButtonData mouseButtonData, Vector2 currentPosition) {
+        private void handleSelectItemForMouseControl(MouseButtonData mouseButtonData, Vector2 currentPosition) {
             if (!isInitialized) return;
             if (InputManager.isFKeyPressed && (
                 ((GameObject)PhotonNetwork.LocalPlayer.TagObject).GetComponent<PlayerInstance.CharacterController>().CharacterState == PlayerInstance.CharacterController.CharacterStates.idle ||
@@ -216,7 +217,7 @@ namespace FYP.InGame.UI
             }
         }
 
-        private void handleButtonUpForMouseControl(InputManager.MouseButtonData mouseButtonData, Vector2 pos) {
+        private void handleButtonUpForMouseControl(MouseButtonData mouseButtonData, Vector2 pos) {
             if (!isInitialized) return;
             if (InputManager.isFKeyPressed && (
                 ((GameObject)PhotonNetwork.LocalPlayer.TagObject).GetComponent<PlayerInstance.CharacterController>().CharacterState == PlayerInstance.CharacterController.CharacterStates.idle ||

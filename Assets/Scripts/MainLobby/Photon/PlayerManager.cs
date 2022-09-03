@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using PlayFab.ClientModels;
 
 namespace FYP.MainLobby
 {
@@ -10,15 +11,16 @@ namespace FYP.MainLobby
     {
         void Start()
         {
-            NetworkManager.onGetPlayerClass += handleGetPlayerClass;
+            NetworkManager.onGetPlayerClass += handleSetPlayerClassId;
         }
 
         private void OnDestroy()
         {
-            NetworkManager.onGetPlayerClass -= handleGetPlayerClass;
+            NetworkManager.onGetPlayerClass -= handleSetPlayerClassId;
         }
 
-        private void handleGetPlayerClass(int characterClassID) {
+        private void handleSetPlayerClassId(Dictionary<string, UserDataRecord> keyValuePairs) {
+            int characterClassID = int.Parse(keyValuePairs[PlayFabKeys.PlayerClass].Value);
             NetworkUtilities.setCustomProperty(PhotonNetwork.LocalPlayer, PlayerGlobalCustomProperties.PlayerClassID, characterClassID);
         }
     }

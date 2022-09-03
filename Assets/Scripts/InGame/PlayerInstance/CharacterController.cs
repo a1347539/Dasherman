@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
+using static FYP.Global.InputUtilities;
 
 namespace FYP.InGame.PlayerInstance
 {
@@ -207,7 +208,7 @@ namespace FYP.InGame.PlayerInstance
 
         #region mouseControl
 
-        private void handleMouseLeftButtonDown(InputManager.MouseButtonData mouseButtonData)
+        private void handleMouseLeftButtonDown(MouseButtonData mouseButtonData)
         {
             if (InputManager.isFKeyPressed) return;
             if (CharacterState != CharacterStates.idle && CharacterState != CharacterStates.aiming)
@@ -216,7 +217,7 @@ namespace FYP.InGame.PlayerInstance
             CharacterState = CharacterStates.aiming;
         }
 
-        private void handleMouseLeftButtonUp(InputManager.MouseButtonData mouseButtonData, Vector2 position)
+        private void handleMouseLeftButtonUp(MouseButtonData mouseButtonData, Vector2 position)
         {
             if (InputManager.isFKeyPressed) {
                 CharacterState = CharacterStates.idle;

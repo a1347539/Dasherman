@@ -8,6 +8,7 @@ using FYP.InGame.Map;
 using FYP.Global;
 using FYP.InGame.Photon;
 using Random = UnityEngine.Random;
+using static FYP.Global.InputUtilities;
 
 namespace FYP.InGame.PlayerInstance
 {
@@ -107,7 +108,7 @@ namespace FYP.InGame.PlayerInstance
                 vital.rechargeMana();
             }
 
-            InputManager.TouchData td = InputManager.touchDatas.First(td => td.touchID == t.fingerId);
+            TouchData td = InputManager.touchDatas.First(td => td.touchID == t.fingerId);
             float angle = td.getAngleFromOnTouch(t.position);
 
             // facing left: 0, facing up: 1, facing right: 2, facing down: 3
@@ -125,7 +126,7 @@ namespace FYP.InGame.PlayerInstance
             // facing vertical direction 
             int maxDistance = calculateMaxDistances(facing);
             maxDistance = Mathf.Min(maxDistance, vital.currentMana);
-            InputManager.TouchData td = InputManager.touchDatas.First(td => td.touchID == t.fingerId);
+            TouchData td = InputManager.touchDatas.First(td => td.touchID == t.fingerId);
             Vector2 deltaPosition = td.getDeltaFromCurrentToOriginInWorldSpace(Camera.main.ScreenToWorldPoint(t.position));
             if (facing == 1 || facing == 3)
             {
@@ -270,7 +271,7 @@ namespace FYP.InGame.PlayerInstance
         }
 
         #region mouseControl
-        private void handleGetCharacterFacingForMouseControl(InputManager.MouseButtonData mouseButtonData, Vector2 position)
+        private void handleGetCharacterFacingForMouseControl(MouseButtonData mouseButtonData, Vector2 position)
         {
             if (!builder.isInitialized) return;
             if (InputManager.isFKeyPressed) return;
@@ -294,7 +295,7 @@ namespace FYP.InGame.PlayerInstance
             }
             calculateDraggedDistanceForMouseControl(facing, mouseButtonData, position);
         }
-        private void calculateDraggedDistanceForMouseControl(int facing, InputManager.MouseButtonData mouseButtonData, Vector2 position)
+        private void calculateDraggedDistanceForMouseControl(int facing, MouseButtonData mouseButtonData, Vector2 position)
         {
             // facing vertical direction 
             int maxDistance = calculateMaxDistances(facing);
@@ -320,7 +321,7 @@ namespace FYP.InGame.PlayerInstance
             directionIndicator.scaleIndicator(facing, distanceToTravel);
         }
 
-        private void handleMoveForMouseControl(InputManager.MouseButtonData mouseButtonData, Vector2 pos)
+        private void handleMoveForMouseControl(MouseButtonData mouseButtonData, Vector2 pos)
         {
             if (controller.CharacterState == CharacterController.CharacterStates.attacking)
             {

@@ -5,6 +5,7 @@ using System;
 using Photon.Pun;
 using System.Linq;
 using FYP.InGame.Photon;
+using static FYP.Global.InputUtilities;
 
 namespace FYP.InGame
 {
@@ -15,34 +16,6 @@ namespace FYP.InGame
 
         // touch control
         #region touch control
-        public struct TouchData
-        {
-            public int touchID;
-            public Vector2 onTouchDownPosition;
-            public Vector2 onTouchDownWorldPosition { get { return Camera.main.ScreenToWorldPoint(onTouchDownPosition); } }
-            public TouchData(int id, Vector2 pos) { touchID = id; onTouchDownPosition = pos; }
-            public float getAngleFromOnTouch(Vector2 currentPos)
-            {
-                Vector2 normalizedPosition = currentPos - onTouchDownPosition;
-                if (normalizedPosition != Vector2.zero)
-                {
-                    float angleFromTouchToCurrent = (float)((Mathf.Atan2(normalizedPosition.y, normalizedPosition.x) / Mathf.PI) * 180f);
-                    if (angleFromTouchToCurrent < 0) angleFromTouchToCurrent += 360f;
-                    return angleFromTouchToCurrent;
-                }
-                return -1;
-            }
-            public float getDistanceFromOnTouch(Vector2 currentPos)
-            {
-                return Vector2.Distance(onTouchDownPosition, currentPos);
-            }
-            public Vector2 getDeltaFromCurrentToOrigin(Vector2 current) { 
-                return new Vector2(current.x - onTouchDownPosition.x, current.y - onTouchDownPosition.y);
-            }
-            public Vector2 getDeltaFromCurrentToOriginInWorldSpace(Vector2 current) {
-                return current - onTouchDownWorldPosition;
-            }
-        }
 
         public static Action<Touch> onTouchDown = delegate { };
         public static Action<Touch> onTouchMove = delegate { };
@@ -57,35 +30,6 @@ namespace FYP.InGame
         public static Action<MouseButtonData, Vector2> onMouseLeftButtonUp = delegate { };
         public static Action<MouseButtonData, Vector2> onMouseHoldDown = delegate { };
         public static Action onFKeyRelease = delegate { };
-
-        public struct MouseButtonData {
-            public Vector2 onButtonDownPosition;
-            public Vector2 onButtonDownWorldPosition { get { return Camera.main.ScreenToWorldPoint(onButtonDownPosition); } }
-            public MouseButtonData(Vector2 pos) { onButtonDownPosition = pos; }
-            public float getAngleFromOnTouch(Vector2 currentPos)
-            {
-                Vector2 normalizedPosition = currentPos - onButtonDownPosition;
-                if (normalizedPosition != Vector2.zero)
-                {
-                    float angleFromTouchToCurrent = (float)((Mathf.Atan2(normalizedPosition.y, normalizedPosition.x) / Mathf.PI) * 180f);
-                    if (angleFromTouchToCurrent < 0) angleFromTouchToCurrent += 360f;
-                    return angleFromTouchToCurrent;
-                }
-                return -1;
-            }
-            public float getDistanceFromOnTouch(Vector2 currentPos)
-            {
-                return Vector2.Distance(onButtonDownPosition, currentPos);
-            }
-            public Vector2 getDeltaFromCurrentToOrigin(Vector2 current)
-            {
-                return new Vector2(current.x - onButtonDownPosition.x, current.y - onButtonDownPosition.y);
-            }
-            public Vector2 getDeltaFromCurrentToOriginInWorldSpace(Vector2 current)
-            {
-                return current - onButtonDownWorldPosition;
-            }
-        }
 
         public static MouseButtonData mouseButtonData;
 

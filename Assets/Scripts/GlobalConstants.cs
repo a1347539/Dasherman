@@ -17,6 +17,11 @@ namespace FYP.Global
     public static class PlayFabKeys 
     {
         public const string PlayerClass = "PlayerClass";
+        public const string PlayerLevel = "PlayerLevel";
+        public const string PlayerGold = "PlayerGold";
+        public const string PlayerExp = "PlayerExp";
+        public const string PlayerUpgrades = "PlayersUpgrades";
+        
     }
 
     public static class UserSettingKeys
@@ -72,6 +77,7 @@ namespace FYP.Global
             GlobalDamagePotion = 23
 
         }
+
         public enum SkillID
         {
             Explosion = 10,
@@ -160,13 +166,12 @@ namespace FYP.Global
             public static string CanvasContainerTag = "CanvasContainer";
             public const string EndGameTimerMessage = "Heading back to the waiting room in";
         }
-
-        namespace Upgrade
+    }
+    namespace Upgrade
+    {
+        public static class GraphKeys
         {
-            public static class GraphKeys
-            {
-                public const string resourceObjectPathPrefix = "Upgrade";
-            }
+            public const string resourceObjectPathPrefix = "Upgrade";
         }
     }
 }
