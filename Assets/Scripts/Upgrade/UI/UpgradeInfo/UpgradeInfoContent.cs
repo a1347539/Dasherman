@@ -122,13 +122,16 @@ namespace FYP.Upgrade
             GraphManager.onNodeUpgrade?.Invoke(id);
         }
 
-        private void handleNodeUpgraded(Node node, bool interactable) {
+        private void handleNodeUpgraded(Node node, bool hasEnoughMoney, bool isMaxLevel) {
             levelText.text = $"{int.Parse(levelText.text.Split('/')[0]) + 1}/{node.nodeData.maxLevel}";
-            if (!interactable)
+            if (isMaxLevel)
             {
                 upgradeButton.gameObject.SetActive(false);
                 costArea.SetActive(false);
                 return;
+            }
+            if (!hasEnoughMoney) {
+                upgradeButton.interactable = false;
             }
             costText.text = node.cost.ToString();
         }

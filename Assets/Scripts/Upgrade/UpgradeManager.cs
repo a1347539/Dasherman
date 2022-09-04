@@ -9,7 +9,7 @@ namespace FYP.Upgrade
 {
     public class UpgradeManager : Singleton<UpgradeManager>
     {
-        public static Action<Node, bool> onNodeUpgraded = delegate { };
+        public static Action<Node, bool, bool> onNodeUpgraded = delegate { };
 
         public int playerLevel;
         private int playerGold;
@@ -51,7 +51,7 @@ namespace FYP.Upgrade
 
             // save data to playfab
             PlayFabUpgradeManager.Instance.saveData();
-            onNodeUpgraded?.Invoke(node, PlayerGold >= node.cost && node.level < node.nodeData.maxLevel);
+            onNodeUpgraded?.Invoke(node, PlayerGold >= node.cost, node.level >= node.nodeData.maxLevel);
         }
     }
 }
