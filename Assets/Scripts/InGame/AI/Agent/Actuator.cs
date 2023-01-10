@@ -23,7 +23,7 @@ namespace FYP.InGame.AI.Agent
         }
 
         public void rechargeMana() {
-            GetComponent<CharacterVital>().rechargeMana(5);
+            GetComponent<CharacterVital>().rechargeMana();
         }
     }
 }

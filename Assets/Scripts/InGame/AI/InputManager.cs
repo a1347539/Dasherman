@@ -36,7 +36,7 @@ namespace FYP.InGame.AI
 
             else if (Input.GetMouseButtonUp(0))
             {
-                onMouseLeftButtonUp?.Invoke(-1);
+                onMouseLeftButtonUp?.Invoke(0);
             }
 
             else if (Input.GetMouseButton(0))

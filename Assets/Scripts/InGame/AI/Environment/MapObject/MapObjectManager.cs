@@ -58,7 +58,6 @@ namespace FYP.InGame.AI.Environment
         {
             breakableObjectDatas = Resources.LoadAll<InGame.BreakableObject.ScriptableBreakableObject>(AIKeys.AIEnvironmentPathPrefix);
             spawnBreakableObjectAvailable?.Invoke();
-            // spawnBreakableObjects(15, 40);
         }
 
         /// <summary>

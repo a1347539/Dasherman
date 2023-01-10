@@ -1,3 +1,4 @@
+using FYP.InGame.AI.Agent;
 using Photon.Pun;
 using System;
 using System.Collections;
@@ -63,17 +64,17 @@ namespace FYP.InGame.AI.Environment.Character
         private void Start()
         {
             InputManager.onMouseHoldDown += handleGetCharacterFacingForMouseControl;
-            InputManager.onMouseLeftButtonUp += move;
+            //InputManager.onMouseLeftButtonUp += move;
             Facing = Random.Range(0, 4);
         }
 
         private void OnDestroy()
         {
             InputManager.onMouseHoldDown -= handleGetCharacterFacingForMouseControl;
-            InputManager.onMouseLeftButtonUp -= move;
+            //InputManager.onMouseLeftButtonUp -= move;
         }
 
-        private void handleGetCharacterFacingForMouseControl(MouseButtonData mouseButtonData, Vector2 position)
+        public void handleGetCharacterFacingForMouseControl(MouseButtonData mouseButtonData, Vector2 position)
         {
             // debug
             if (!controllable) return;
@@ -84,14 +85,21 @@ namespace FYP.InGame.AI.Environment.Character
                 return;
             if (distanceToTravel == 0)
             {
-                vital.rechargeMana(1);
+                // AI Heuristic
+                // vital.rechargeMana(1);
+                GetComponent<DashingGameAgent>().isRechargeMana = 1;
+            }
+            else {
+                GetComponent<DashingGameAgent>().isRechargeMana = 0;
             }
 
             float angle = mouseButtonData.getAngleFromOnTouch(position);
 
             // facing left: 0, facing up: 1, facing right: 2, facing down: 3
             if (angle == -1) { return; }
-            Facing = (Mathf.FloorToInt((angle + 45) / 90)) % 4;
+            // AI Heuristic
+            GetComponent<DashingGameAgent>().facingIndex = (Mathf.FloorToInt((angle + 45) / 90)) % 4;
+            // Facing = (Mathf.FloorToInt((angle + 45) / 90)) % 4;
 
             if (Time.time - controller.startTimeToTryAttack < controller.attackFrames)
             {
@@ -123,6 +131,8 @@ namespace FYP.InGame.AI.Environment.Character
             {
                 distanceToTravel = Mathf.Max(distanceToTravel, -maxDistance);
             }
+            // AI Heuristic
+            GetComponent<DashingGameAgent>().moveDistance = distanceToTravel;
             directionIndicator.scaleIndicator(facing, distanceToTravel);
         }
 
@@ -238,11 +248,11 @@ namespace FYP.InGame.AI.Environment.Character
                 return;
             }
 
-            if (distanceToTravel == -1) { distanceToTravel = this.distanceToTravel; }
+            if (distanceToTravel == 0) { distanceToTravel = this.distanceToTravel; }
 
             int maxDistance = calculateMaxDistances(facing);
             maxDistance = Mathf.Min(maxDistance, vital.currentMana);
-            distanceToTravel = Mathf.Min(maxDistance, distanceToTravel);
+            distanceToTravel = Math.Clamp(distanceToTravel, -maxDistance, maxDistance);
 
             if (distanceToTravel == 0) { return; }
             Point p = controller.currentPoint;
@@ -259,6 +269,7 @@ namespace FYP.InGame.AI.Environment.Character
             vital.setMana(-Mathf.Abs(distanceToTravel));
             controller.setCurrentPoint(p, true);
             this.distanceToTravel = 0;
+            GetComponent<DashingGameAgent>().moveDistance = 0;
             directionIndicator.resetIndicator();
 
         }

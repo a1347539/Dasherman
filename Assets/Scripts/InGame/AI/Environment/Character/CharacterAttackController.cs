@@ -29,7 +29,8 @@ namespace FYP.InGame.AI.Environment.Character
         private int baseWeaponDamage;
         public int WeaponDamage
         {
-            get { print(baseWeaponDamage * physicalDamageScaling); return (int)(baseWeaponDamage * physicalDamageScaling); }
+            get { // print(baseWeaponDamage * physicalDamageScaling);
+                  return (int)(baseWeaponDamage * physicalDamageScaling); }
         }
 
         public GameObject weapon { get; private set; }
@@ -102,10 +103,10 @@ namespace FYP.InGame.AI.Environment.Character
                         }
                     }
                 }
-                foreach (GameObject ob in playersInPath)
+                /*foreach (GameObject ob in playersInPath)
                 {
                     print($"{ob.name} is in the path");
-                }
+                }*/
                 return playersInPath;
             }
 
@@ -121,10 +122,12 @@ namespace FYP.InGame.AI.Environment.Character
                 enemy.GetComponent<IDamageable>().takeDamage(DashingDamage, DamageType.dashing);
                 totalDashingDamage += DashingDamage;
             }
-
-            // AI Training
-            print($"add reward {totalDashingDamage}");
-            GetComponent<DashingGameAgent>().AddReward(totalDashingDamage);
+            if (totalDashingDamage != 0)
+            {
+                // AI Training
+                print($"add reward {totalDashingDamage}");
+                GetComponent<DashingGameAgent>().AddReward(totalDashingDamage);
+            }
         }
 
         private void handleAttack(int facingIndex)
@@ -174,10 +177,10 @@ namespace FYP.InGame.AI.Environment.Character
                         {
                             objectsInRange.AddRange(MapController.Instance.tileMatrix[j][i].currentObjects.Where(ob => !GameManager.Instance.isSameTeam(gameObject, ob)));
                         }
-                        else if (MapController.Instance.tileMatrix[j][i].tileState == Tile.TileStates.hasBreakable)
+/*                        else if (MapController.Instance.tileMatrix[j][i].tileState == Tile.TileStates.hasBreakable)
                         {
                             objectsInRange.AddRange(MapController.Instance.tileMatrix[j][i].currentObjects);
-                        }
+                        }*/
                     }
                 }
             }
@@ -188,13 +191,17 @@ namespace FYP.InGame.AI.Environment.Character
 
             foreach (GameObject obj in objectsInRange)
             {
-                obj.GetComponent<IDamageable>().takeDamage((int)(WeaponDamage * physicalDamageScaling), DamageType.physicalHit);
-                totalWeaponDamage += (int)(WeaponDamage * physicalDamageScaling);
+                // sacling already applied
+                obj.GetComponent<IDamageable>().takeDamage(WeaponDamage, DamageType.physicalHit);
+                totalWeaponDamage += WeaponDamage;
             }
 
             // AI Training
-            print($"add reward {totalWeaponDamage}");
-            GetComponent<DashingGameAgent>().AddReward(totalWeaponDamage);
+            if (totalWeaponDamage != 0)
+            {
+                print($"add reward {totalWeaponDamage}");
+                GetComponent<DashingGameAgent>().AddReward(totalWeaponDamage);
+            }
         }
     }
 }

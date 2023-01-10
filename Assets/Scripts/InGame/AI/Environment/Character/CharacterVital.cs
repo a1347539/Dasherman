@@ -78,27 +78,27 @@ namespace FYP.InGame.AI.Environment.Character
             this.rawMagicDefenceScaling = maigcDefenceScaling;
         }
 
-        public void rechargeMana(int customRate)
+        public void rechargeMana()
         {
             if (currentMana >= maxMana)
             {
                 currentMana = maxMana;
                 return;
             }
-            float deltaManaRawValue = manaRegenerationRate * Time.deltaTime * customRate;
+            float deltaManaRawValue = manaRegenerationRate * Time.deltaTime;
             currentManaRaw += deltaManaRawValue;
             currentMana = (int)currentManaRaw;
             onSetMana?.Invoke(currentManaRaw / maxMana);
 
             // AI Training
-            print($"add reward {deltaManaRawValue}");
+            // print($"add reward {deltaManaRawValue}");
             GetComponent<DashingGameAgent>().AddReward(deltaManaRawValue);
         }
 
         public void setHealth(int deltaHealth)
         {
             // called by incident object from caller's instance
-            print("sethealth");
+            // print("sethealth");
             int newHealth = currentHealth + deltaHealth;
             if (newHealth > maxHealth) { newHealth = maxHealth; }
 
@@ -141,7 +141,7 @@ namespace FYP.InGame.AI.Environment.Character
                     int respawnY;
                     do
                     {
-                        print("get spawn point");
+                        // print("get spawn point");
                         respawnX = Random.Range(0, MapController.Instance.playableMapSize.x);
                         respawnY = Random.Range(0, MapController.Instance.playableMapSize.y);
                     }
@@ -154,9 +154,14 @@ namespace FYP.InGame.AI.Environment.Character
                 }
             }
 
-            print($"{currentHealth} {damageAfterDefence}");
+            // print($"{currentHealth} {damageAfterDefence}");
+            
+            // no need to decrease health when training
+            // setHealth(-damageAfterDefence);
 
-            setHealth(-damageAfterDefence);
+            // AI training
+            print($"add reward {-damageAfterDefence}");
+            GetComponent<DashingGameAgent>().AddReward(-damageAfterDefence);
         }
 
         IEnumerator TakeDamageEffect()

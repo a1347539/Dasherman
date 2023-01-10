@@ -1,10 +1,15 @@
 using FYP.InGame.AI.Environment;
 using FYP.InGame.AI.Environment.Character;
+using Photon.Pun.Demo.PunBasics;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
+using UnityEngine.UIElements;
+using static FYP.Global.InputUtilities;
+using CharacterController = FYP.InGame.AI.Environment.Character.CharacterController;
 
 namespace FYP.InGame.AI.Agent
 {
@@ -15,18 +20,42 @@ namespace FYP.InGame.AI.Agent
 
         private int selfTeamNumber;
 
-        void Start()
+        public int isAiming = 0;
+        public int facingIndex = 0;
+        public int moveDistance = 0;
+        public int isMove = 0;
+        public int isAttack = 0;
+        public int isRechargeMana = 0;
+
+        private void Awake()
         {
+            AIManager.Instance.onTimerEnd += handleTimerEnd;
             mySensor = GetComponent<Sensor>();
             myActuator = GetComponent<Actuator>();
             selfTeamNumber = GetComponent<CharacterBuilder>().teamNumber;
+        }
+
+
+        private void OnDestroy()
+        {
+            // AIManager.Instance.onTimerEnd -= handleTimerEnd;
+        }
+
+        public void handleTimerEnd()
+        {
+            EndEpisode();
+        }
+
+        public override void OnEpisodeBegin()
+        {
+            AIManager.Instance.resetEnvironment();
+            AIManager.Instance.resetTimer();
         }
 
         public override void CollectObservations(VectorSensor sensor)
         {
             // add own team number
             sensor.AddObservation(selfTeamNumber);
-
             sensor.AddObservation(mySensor.getHealth());
             sensor.AddObservation(mySensor.getMana());
             Vector2 p = mySensor.getSelfPosition();
@@ -49,14 +78,39 @@ namespace FYP.InGame.AI.Agent
 
         public override void OnActionReceived(ActionBuffers actions)
         {
-            // facing, moveDistance, shouldAttack, shouldRechargeMana
-            myActuator.changeFacing(actions.DiscreteActions[0]);
-            myActuator.move(actions.DiscreteActions[1]);
-            if (actions.DiscreteActions[2] == 1)  myActuator.attack();
-            if (actions.DiscreteActions[3] == 1) myActuator.rechargeMana();
+            // remove this part and change the conditions below accordingly if on Heuristic
 
-            AddReward(1f / AIManager.Instance.durationInStep);
+            // shouldDoMovingAction, facing, moveDistance, shouldMove, shouldAttack, shouldRechargeMana
+
+            if (actions.DiscreteActions[0] == 1) myActuator.changeFacing(actions.DiscreteActions[1]);
+
+            if (actions.DiscreteActions[3] == 1)
+            {
+                if (GetComponent<CharacterMovement>().Facing == 2 || GetComponent<CharacterMovement>().Facing == 3) myActuator.move(-actions.DiscreteActions[2]);
+                else myActuator.move(actions.DiscreteActions[2]);
+            }
+            if (actions.DiscreteActions[4] == 1) myActuator.attack();
+            if (actions.DiscreteActions[5] == 1) myActuator.rechargeMana();
+
+            // print($"{actions.DiscreteActions[0]}, {actions.DiscreteActions[1]}, {actions.DiscreteActions[2]}, {actions.DiscreteActions[3]}, {actions.DiscreteActions[4]}, {actions.DiscreteActions[5]}");
+
+            AddReward(-1f / AIManager.Instance.durationInStep);
         }
 
+
+        // Heuristic
+
+        public static MouseButtonData mouseButtonData;
+
+        public override void Heuristic(in ActionBuffers actionsOut)
+        {
+            ActionSegment<int> actions = actionsOut.DiscreteActions;
+            actions[0] = isAiming;
+            actions[1] = facingIndex;
+            actions[2] = Math.Abs(moveDistance);
+            actions[3] = isMove;
+            actions[4] = isAttack;
+            actions[5] = isRechargeMana;
+        }
     }
 }

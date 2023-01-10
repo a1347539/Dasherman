@@ -1,25 +1,22 @@
-using FYP.InGame.AI.Agent;
 using FYP.InGame.AI.Environment;
-using FYP.InGame.AI.Environment.Character;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net;
-using Unity.MLAgents;
-using Unity.MLAgents.Policies;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
+using FYP.InGame.AI;
 using CharacterController = FYP.InGame.AI.Environment.Character.CharacterController;
+using FYP.InGame.AI.Agent;
 
 namespace FYP.InGame.AI
 {
     public class AIManager : Singleton<AIManager>
     {
+        public Action onTimerEnd = delegate { };
+
         public float timerStart;
         private float timeLeft;
 
         public float durationInStep;
+
+        GameObject agent1;
 
         private void Awake()
         {
@@ -38,40 +35,42 @@ namespace FYP.InGame.AI
             timeLeft -= Time.deltaTime;
             if (timeLeft < 0)
             {
-                onTimerEnd();
-
+                onTimerEnd?.Invoke();
             }
         }
 
-        public void onTimerEnd() {
-            for (int i = 0; i < MapObjectManager.Instance.characterContainer.childCount; ++i) {
-                Destroy(MapObjectManager.Instance.characterContainer.GetChild(i).gameObject);
-            }
+
+        public void resetEnvironment() {
+            MapController.Instance.createVirtualMatrix();
+            // handleSpawnBreakableObject();
 
             for (int i = 0; i < MapObjectManager.Instance.breakableObjectContainer.childCount; ++i)
             {
-                Destroy(MapObjectManager.Instance.breakableObjectContainer.GetChild(i).gameObject);
+                GameObject go = MapObjectManager.Instance.breakableObjectContainer.GetChild(i).gameObject;
+                go.GetComponent<Environment.BreakableObject>().setCurrentPoint(Environment.GameManager.Instance.getEmptyPoint());
             }
 
-            MapController.Instance.createVirtualMatrix();
-
-
-            handleSpawnCharacters();
-            handleSpawnBreakableObject();
-
-
-            timeLeft = timerStart;
+            for (int i = 0; i < MapObjectManager.Instance.characterContainer.childCount; ++i)
+            {
+                MapObjectManager.Instance.characterContainer.GetChild(i).GetComponent<CharacterController>().setCurrentPoint(Environment.GameManager.Instance.getEmptyPoint(), false);
+            }
         }
-
-
 
         private void handleSpawnCharacters()
         {
-            MapObjectManager.Instance.spawnCharacter(1115, 1);
+            agent1 = MapObjectManager.Instance.spawnCharacter(1115, 1);
+            MapObjectManager.Instance.spawnCharacter(1115, 2);
         }
 
         private void handleSpawnBreakableObject() {
-            MapObjectManager.Instance.spawnBreakableObjects(15, 40);
+            MapObjectManager.Instance.spawnBreakableObjects(0, 0);
+
+            agent1.GetComponent<DashingGameAgent>().enabled = true;
+        }
+
+        public void resetTimer()
+        {
+            timeLeft = timerStart;
         }
     }
 }

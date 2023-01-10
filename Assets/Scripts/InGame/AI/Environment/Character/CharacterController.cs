@@ -1,3 +1,4 @@
+using FYP.InGame.AI.Agent;
 using Photon.Pun;
 using System;
 using System.Collections;
@@ -79,7 +80,7 @@ namespace FYP.InGame.AI.Environment.Character
 
         private void onChangeCurrenPoint(Point oldPoint, Point newPoint, bool dashing)
         {
-            print(newPoint.x + " " + newPoint.y);
+            // print(newPoint.x + " " + newPoint.y);
 
             Vector2 cellCenterPosition = MapController.Instance.pointToTile(newPoint).worldPositionOfCellCenter;
             transform.position = new Vector3(
@@ -124,17 +125,24 @@ namespace FYP.InGame.AI.Environment.Character
             CharacterState = CharacterStates.idle;
         }
 
-        private void handleMouseLeftButtonDown(MouseButtonData mouseButtonData)
+        public void handleMouseLeftButtonDown(MouseButtonData mouseButtonData)
         {
             if (InputManager.isFKeyPressed) return;
             if (CharacterState != CharacterStates.idle && CharacterState != CharacterStates.aiming)
                 return;
             startTimeToTryAttack = Time.time;
             CharacterState = CharacterStates.aiming;
+
+            // AI Heuristic
+            GetComponent<DashingGameAgent>().isAiming = 1;
         }
 
-        private void handleMouseLeftButtonUp(int temp)
+        public void handleMouseLeftButtonUp(int temp)
         {
+            // AI Heuristic
+            GetComponent<DashingGameAgent>().isMove = 1;
+            GetComponent<DashingGameAgent>().isAiming = 0;
+
             if (InputManager.isFKeyPressed)
             {
                 CharacterState = CharacterStates.idle;
@@ -144,10 +152,11 @@ namespace FYP.InGame.AI.Environment.Character
                 return;
             if (Time.time - startTimeToTryAttack < attackFrames)
             {
-                CharacterState = CharacterStates.attacking;
+                // AI Heuristic
+                // CharacterState = CharacterStates.attacking;
+                GetComponent<DashingGameAgent>().isAttack = 1;
             }
             else { CharacterState = CharacterStates.idle; }
-
         }
     }
 }

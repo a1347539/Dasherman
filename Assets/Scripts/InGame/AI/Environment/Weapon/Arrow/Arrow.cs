@@ -147,9 +147,12 @@ namespace FYP.InGame.AI.Environment.Weapon
                 totalArraowDamage += (int)(damage * damageScaling);
             }
 
-            // AI Training
-            print($"add reward {totalArraowDamage}");
-            user.GetComponent<DashingGameAgent>().AddReward(totalArraowDamage);
+            if (totalArraowDamage != 0)
+            {
+                // AI Training
+                print($"add reward {totalArraowDamage}");
+                user.GetComponent<DashingGameAgent>().AddReward(totalArraowDamage);
+            }
 
             if (objectsInRange.Count > 0) { Destroy(gameObject); }
         }
