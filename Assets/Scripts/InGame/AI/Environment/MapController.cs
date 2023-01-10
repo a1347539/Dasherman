@@ -22,7 +22,7 @@ namespace FYP.InGame.AI.Environment
         public Tilemap playableTilemapBaseLayer { get; private set; }
         public Vector2 playableAreaOrigin { get; private set; }
 
-        public List<List<Tile>> tileMatrix = new List<List<Tile>>();
+        public List<List<Tile>> tileMatrix;
 
         public Vector2 characterSpriteScaling { get { return new Vector2(cellSize * 2.6f, cellSize * 2.6f); } }
         public float characterSpriteOffsetInY { get { return cellSize * 0.3f; } }
@@ -57,6 +57,7 @@ namespace FYP.InGame.AI.Environment
 
         public void createVirtualMatrix()
         {
+            tileMatrix = new List<List<Tile>>();
             for (int i = 0; i < mapData.playableMapSize.y; i++)
             {
                 tileMatrix.Add(new List<Tile>());

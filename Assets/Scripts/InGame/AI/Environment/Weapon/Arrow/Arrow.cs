@@ -1,3 +1,4 @@
+using FYP.InGame.AI.Agent;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -136,10 +137,19 @@ namespace FYP.InGame.AI.Environment.Weapon
                 objectsInRange.AddRange(t.currentObjects);
             }
 
+            // AI Training
+            float totalArraowDamage = 0;
+
+
             foreach (GameObject obj in objectsInRange)
             {
                 obj.GetComponent<IDamageable>().takeDamage((int)(damage * damageScaling), DamageType.physicalHit);
+                totalArraowDamage += (int)(damage * damageScaling);
             }
+
+            // AI Training
+            print($"add reward {totalArraowDamage}");
+            user.GetComponent<DashingGameAgent>().AddReward(totalArraowDamage);
 
             if (objectsInRange.Count > 0) { Destroy(gameObject); }
         }

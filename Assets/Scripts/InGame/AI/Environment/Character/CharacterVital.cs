@@ -1,4 +1,5 @@
 using FYP.InGame;
+using FYP.InGame.AI.Agent;
 using FYP.InGame.Map;
 using Photon.Pun;
 using System;
@@ -77,17 +78,21 @@ namespace FYP.InGame.AI.Environment.Character
             this.rawMagicDefenceScaling = maigcDefenceScaling;
         }
 
-        public void rechargeMana()
+        public void rechargeMana(int customRate)
         {
             if (currentMana >= maxMana)
             {
                 currentMana = maxMana;
                 return;
             }
-            float deltaManaRawValue = manaRegenerationRate * Time.deltaTime;
+            float deltaManaRawValue = manaRegenerationRate * Time.deltaTime * customRate;
             currentManaRaw += deltaManaRawValue;
             currentMana = (int)currentManaRaw;
             onSetMana?.Invoke(currentManaRaw / maxMana);
+
+            // AI Training
+            print($"add reward {deltaManaRawValue}");
+            GetComponent<DashingGameAgent>().AddReward(deltaManaRawValue);
         }
 
         public void setHealth(int deltaHealth)

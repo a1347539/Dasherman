@@ -1,3 +1,4 @@
+using FYP.InGame.AI.Agent;
 using FYP.InGame.AI.Environment.Weapon;
 using Photon.Pun;
 using System.Collections.Generic;
@@ -109,12 +110,21 @@ namespace FYP.InGame.AI.Environment.Character
             }
 
             List<GameObject> enemiesInPath = getEnemiesInPath(oldPoint, newPoint);
+
+            // AI Training
+            float totalDashingDamage = 0;
+
             foreach (GameObject enemy in enemiesInPath)
             {
                 // if (enemy.Owner == PhotonNetwork.LocalPlayer) continue;
                 // print($"{enemy.Owner.NickName} take damage");
                 enemy.GetComponent<IDamageable>().takeDamage(DashingDamage, DamageType.dashing);
+                totalDashingDamage += DashingDamage;
             }
+
+            // AI Training
+            print($"add reward {totalDashingDamage}");
+            GetComponent<DashingGameAgent>().AddReward(totalDashingDamage);
         }
 
         private void handleAttack(int facingIndex)
@@ -171,10 +181,20 @@ namespace FYP.InGame.AI.Environment.Character
                     }
                 }
             }
+
+            // AI Training
+            float totalWeaponDamage = 0;
+
+
             foreach (GameObject obj in objectsInRange)
             {
-                obj.GetComponent<IDamageable>().takeDamage(WeaponDamage, DamageType.physicalHit);
+                obj.GetComponent<IDamageable>().takeDamage((int)(WeaponDamage * physicalDamageScaling), DamageType.physicalHit);
+                totalWeaponDamage += (int)(WeaponDamage * physicalDamageScaling);
             }
+
+            // AI Training
+            print($"add reward {totalWeaponDamage}");
+            GetComponent<DashingGameAgent>().AddReward(totalWeaponDamage);
         }
     }
 }

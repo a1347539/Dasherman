@@ -2,6 +2,7 @@ using FYP.Global.InGame;
 using FYP.InGame.AI.Environment.Character;
 using FYP.InGame.AI.Environment.Weapon;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -11,6 +12,8 @@ namespace FYP.InGame.AI.Environment
     public class MapObjectManager : Singleton<MapObjectManager>
     {
         public Action spawnCharacterAvailable;
+
+        public Action spawnBreakableObjectAvailable;
 
         [SerializeField]
         public Transform breakableObjectContainer;
@@ -48,28 +51,20 @@ namespace FYP.InGame.AI.Environment
             weaponDatas = Resources.LoadAll<InGame.Weapon.ScriptableWeapon>(AIKeys.scriptableWeaponPathPrefix);
 
             spawnCharacterAvailable?.Invoke();
-            // spawnCharacter(1115, 2);
+
         }
 
         public void handlePlaceBreakableObjects()
         {
             breakableObjectDatas = Resources.LoadAll<InGame.BreakableObject.ScriptableBreakableObject>(AIKeys.AIEnvironmentPathPrefix);
-
-            int numberOfBreakableObject = Random.Range(15, 40);
-            for (int i = 0; i < numberOfBreakableObject; ++i) {
-                int ObjectIndex = Random.Range(0, breakableObjectDatas.Length-1);
-                GameObject obj = Instantiate(breakableObjectDatas[ObjectIndex].prefab, Vector2.zero, Quaternion.identity);
-                if (obj != null)
-                {
-                    obj.GetComponent<BreakableObject>().initialize(breakableObjectDatas[ObjectIndex].health, GameManager.Instance.getEmptyPoint());
-                }
-            }
+            spawnBreakableObjectAvailable?.Invoke();
+            // spawnBreakableObjects(15, 40);
         }
 
         /// <summary>
         /// teamId are either 1 or 2
         /// </summary>
-        public void spawnCharacter(int characterId, int teamId) {
+        public GameObject spawnCharacter(int characterId, int teamId) {
             PlayerInstance.ScriptableCharacter sc = charactersDatas.First(data => data.characterId == characterId);
             InGame.Weapon.ScriptableWeapon sw = weaponDatas.First(data => data.weaponID == sc.defaultWeaponID);
 
@@ -78,6 +73,21 @@ namespace FYP.InGame.AI.Environment
 
             weapon.GetComponent<WeaponController>().initialize(sw, character);
             character.GetComponent<CharacterBuilder>().initialize(GameManager.Instance.getEmptyPoint(), sc, weapon, sw.attackType, teamId);
+
+            return character;
+        }
+
+        public void spawnBreakableObjects(int min, int max) {
+            int numberOfBreakableObject = Random.Range(min, max);
+            for (int i = 0; i < numberOfBreakableObject; ++i)
+            {
+                int ObjectIndex = Random.Range(0, breakableObjectDatas.Length - 1);
+                GameObject obj = Instantiate(breakableObjectDatas[ObjectIndex].prefab, Vector2.zero, Quaternion.identity);
+                if (obj != null)
+                {
+                    obj.GetComponent<BreakableObject>().initialize(breakableObjectDatas[ObjectIndex].health, GameManager.Instance.getEmptyPoint());
+                }
+            }
         }
     }
 }

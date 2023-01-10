@@ -63,14 +63,14 @@ namespace FYP.InGame.AI.Environment.Character
         private void Start()
         {
             InputManager.onMouseHoldDown += handleGetCharacterFacingForMouseControl;
-            InputManager.onMouseLeftButtonUp += Move;
+            InputManager.onMouseLeftButtonUp += move;
             Facing = Random.Range(0, 4);
         }
 
         private void OnDestroy()
         {
             InputManager.onMouseHoldDown -= handleGetCharacterFacingForMouseControl;
-            InputManager.onMouseLeftButtonUp -= Move;
+            InputManager.onMouseLeftButtonUp -= move;
         }
 
         private void handleGetCharacterFacingForMouseControl(MouseButtonData mouseButtonData, Vector2 position)
@@ -84,7 +84,7 @@ namespace FYP.InGame.AI.Environment.Character
                 return;
             if (distanceToTravel == 0)
             {
-                vital.rechargeMana();
+                vital.rechargeMana(1);
             }
 
             float angle = mouseButtonData.getAngleFromOnTouch(position);
@@ -223,12 +223,12 @@ namespace FYP.InGame.AI.Environment.Character
         }
 
         // AI-output In-let
-        private void ChangeFacing(int index) {
+        public void changeFacing(int index) {
             Facing = index;
         }
 
         // AI-output In-let
-        private void Move(int distanceToTravel)
+        public void move(int distanceToTravel)
         {
             // debug
             if (!controllable) return;

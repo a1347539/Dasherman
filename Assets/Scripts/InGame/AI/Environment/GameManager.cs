@@ -18,7 +18,7 @@ namespace FYP.InGame.AI.Environment
             int y;
             do
             {
-                print("get spawn point");
+                // print("get spawn point");
                 x = Random.Range(0, MapController.Instance.playableMapSize.x);
                 y = Random.Range(0, MapController.Instance.playableMapSize.y);
             }
