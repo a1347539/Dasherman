@@ -1,4 +1,5 @@
-﻿using FYP.InGame;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -32,7 +33,6 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
     [SerializeField] protected RectTransform background = null;
     [SerializeField] private RectTransform handle = null;
-
     private RectTransform baseRect = null;
 
     private Canvas canvas;
@@ -64,7 +64,6 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (InputManager.Instance.isTouchControl) return;
         cam = null;
         if (canvas.renderMode == RenderMode.ScreenSpaceCamera)
             cam = canvas.worldCamera;
@@ -77,7 +76,8 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         handle.anchoredPosition = input * radius * handleRange;
     }
 
-    public void onTouchInputMove(Vector2 pos) {
+    public void onTouchInputMove(Vector2 pos)
+    {
         cam = null;
         if (canvas.renderMode == RenderMode.ScreenSpaceCamera)
             cam = canvas.worldCamera;
@@ -149,7 +149,8 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         handle.anchoredPosition = Vector2.zero;
     }
 
-    public void onTouchInputUp() {
+    public void onTouchInputUp()
+    {
         input = Vector2.zero;
         handle.anchoredPosition = Vector2.zero;
     }

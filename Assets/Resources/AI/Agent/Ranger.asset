@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95e0b356d12117443b2875f1e02acb45, type: 3}
+  m_Name: Ranger
+  m_EditorClassIdentifier: 
+  characterPrefab: {fileID: 7125054922398199362, guid: f73c73df321b1da43a66b103d9e980d9, type: 3}
+  classIcon: {fileID: 21300000, guid: 200387ab94629e04399213115c07466c, type: 3}
+  defaultWeaponID: 122
+  characterName: Ranger
+  characterId: 1117
+  baseHealth: 10
+  baseMana: 10
+  baseDashingDamage: 3
+  baseManaRegenRate: 3
+  healthScaling: 5
+  manaScaling: 4
+  physicalDamageScaling: 4
+  magicDamageScaling: 1
+  physicalDefenceScaling: 4
+  magicDefenceScaling: 3
+  manaRegenScaling: 5

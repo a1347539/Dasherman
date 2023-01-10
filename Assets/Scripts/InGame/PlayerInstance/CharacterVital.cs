@@ -125,6 +125,7 @@ namespace FYP.InGame.PlayerInstance
 
         void IDamageable.takeDamage(int damage, DamageType damageType, PhotonView pv)
         {
+            // pv is the damage dealer, for adding score
             int damageAfterDefence;
             if (damageType == DamageType.skillHit)
             {
@@ -164,13 +165,13 @@ namespace FYP.InGame.PlayerInstance
             uiManager.deactivateAllUI();
 
             builder.TeleportSmokeEffect.Play();
-
+            // free up tile from current player
+            MapController.Instance.tileMatrix[controller.currentPoint.y][controller.currentPoint.x].objectExit(photonView);
             while (builder.TeleportSmokeEffect.isPlaying) {
                 yield return null;
             }
             if (controller.CharacterState == CharacterController.CharacterStates.died) yield break;
-            // free up tile from current player
-            MapController.Instance.tileMatrix[controller.currentPoint.y][controller.currentPoint.x].objectExit(photonView);
+            
             transform.position = new Vector3(
                 spawnPosition.x,
                 spawnPosition.y + MapController.Instance.characterSpriteOffsetInY

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Bush
   m_EditorClassIdentifier: 
   prefab: {fileID: 1722451988503519645, guid: 91919accad16e0f40b584edfb2b05d1d, type: 3}
-  health: 20
+  health: 30

@@ -61,7 +61,7 @@ namespace FYP.InGame.Map
             GameObject obj = NetworkUtilities.networkInstantiate(mapData.mapPrefab, Vector3.zero, Quaternion.identity, true);
             grids = new List<Grid>(mapData.mapPrefab.GetComponentsInChildren<Grid>());
             initPoints = XmlUtilities.load<MapInitPoints>(mapData.mapInitPoints);
-            playableGrid = grids.FirstOrDefault(map => map.CompareTag(MapKeys.mapReachableTage));
+            playableGrid = grids.FirstOrDefault(map => map.CompareTag(MapKeys.mapReachableTag));
 
             playableMapSize = mapData.playableMapSize;
             // cell is square

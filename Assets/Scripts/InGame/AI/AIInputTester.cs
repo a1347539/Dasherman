@@ -8,10 +8,11 @@ using FYP.InGame.Map;
 using Photon.Pun;
 using static FYP.InGame.PlayerInstance.CharacterController;
 using FYP.InGame.PlayerItemInstance;
+using Photon.Realtime;
 
 namespace FYP.InGame.AI
 {
-    public class AIInput : MonoBehaviourPun
+    public class AIInputTester : MonoBehaviourPun
     {
         private CharacterMovement movement;
         private CharacterVital vital;
@@ -26,12 +27,14 @@ namespace FYP.InGame.AI
 
         private void Start()
         {
-            StartCoroutine(continuousSkillActionCoroutine());
+            // StartCoroutine(continuousSkillActionCoroutine());
         }
 
         private void Update()
         {
             // vital.rechargeMana();
+
+
         }
 
         private IEnumerator continuousMoveActionCoroutine()

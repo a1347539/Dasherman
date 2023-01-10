@@ -76,6 +76,12 @@ namespace FYP.InGame.Photon
             breakableObjectDatas = Resources.LoadAll<ScriptableBreakableObject>(BreakableObjectKeys.scriptableBreakableObjectPathPrefix);
 
             List<Map.BreakableObject> objects = MapController.Instance.initPoints.breakableObjectSpawnPoints;
+
+            foreach (var data in breakableObjectDatas) {
+                print(data.name);
+            }
+
+
             for (int i = 0; i < objects.Count; i++)
             {
                 foreach (Map.SpawnPoint spawnPoint in objects[i].objectSpawnPoints)

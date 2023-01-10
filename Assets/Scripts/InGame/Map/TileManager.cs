@@ -1,3 +1,5 @@
+// obsolete, never used in game
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
