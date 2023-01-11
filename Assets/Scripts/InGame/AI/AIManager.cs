@@ -110,6 +110,9 @@ namespace FYP.InGame.AI
             for (int i = 0; i < mapObjectManager.characterContainer.childCount; ++i)
             {
                 mapObjectManager.characterContainer.GetChild(i).GetComponent<CharacterController>().setCurrentPoint(gameManager.getEmptyPoint(), false);
+                mapObjectManager.characterContainer.GetChild(i).GetComponent<CharacterVital>().setMana(
+                    mapObjectManager.characterContainer.GetChild(i).GetComponent<CharacterVital>().maxMana
+                    );
             }
 
             getNewMap();

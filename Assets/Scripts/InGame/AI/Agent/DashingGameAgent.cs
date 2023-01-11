@@ -24,6 +24,9 @@ namespace FYP.InGame.AI.Agent
         private Sensor mySensor;
         private Actuator myActuator;
 
+        public float timer = 0f;
+        public float intervalBetweenMove = 1.2f;
+
         private int selfTeamNumber;
 
         public int isAiming = 0;
@@ -44,10 +47,14 @@ namespace FYP.InGame.AI.Agent
             selfTeamNumber = GetComponent<CharacterBuilder>().teamNumber;
         }
 
-
         private void OnDestroy()
         {
             // AIManager.Instance.onTimerEnd -= handleTimerEnd;
+        }
+
+        private void Update()
+        {
+            timer -= Time.deltaTime;
         }
 
         public void handleTimerEnd()
@@ -89,21 +96,22 @@ namespace FYP.InGame.AI.Agent
         {
             // remove this part and change the conditions below accordingly if on Heuristic
 
-            // shouldDoMovingAction, facing, moveDistance, shouldMove, shouldAttack, shouldRechargeMana
+            // facing, moveDistance, shouldMove, shouldAttack, shouldRechargeMana
             if (GetComponent<CharacterController>().CharacterState != CharacterStates.idle && GetComponent<CharacterController>().CharacterState != CharacterStates.aiming)
                 return;
-            if (actions.DiscreteActions[5] == 1) { 
+            if (actions.DiscreteActions[4] == 1) { 
                 myActuator.rechargeMana();
-                return;
             }
-            if (actions.DiscreteActions[0] == 1) myActuator.changeFacing(actions.DiscreteActions[1]);
 
-            if (actions.DiscreteActions[3] == 1)
+            // keep the agent from moving to quickly
+            if (timer > 0) return;
+
+            if (actions.DiscreteActions[2] == 1)
             {
-                if (GetComponent<CharacterMovement>().Facing == 2 || GetComponent<CharacterMovement>().Facing == 3) myActuator.move(-actions.DiscreteActions[2]);
-                else myActuator.move(actions.DiscreteActions[2]);
+                myActuator.move(actions.DiscreteActions[0], actions.DiscreteActions[1]);
+                timer = intervalBetweenMove;
             }
-            //if (actions.DiscreteActions[4] == 1) myActuator.attack();
+            //if (actions.DiscreteActions[3] == 1) myActuator.attack();
 
             // print($"{actions.DiscreteActions[0]}, {actions.DiscreteActions[1]}, {actions.DiscreteActions[2]}, {actions.DiscreteActions[3]}, {actions.DiscreteActions[4]}, {actions.DiscreteActions[5]}");
 

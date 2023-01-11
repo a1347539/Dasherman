@@ -786,7 +786,7 @@ MonoBehaviour:
   mapController: {fileID: 6665427967192004163}
   gameManager: {fileID: 6665427965875441153}
   processedTileMatrix: 
-  timerStart: 20
+  timerStart: 10
   durationInStep: 0
   microReward: 0.002
   reward: 1

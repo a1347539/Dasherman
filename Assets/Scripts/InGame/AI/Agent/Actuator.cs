@@ -9,13 +9,14 @@ namespace FYP.InGame.AI.Agent
 {
     public class Actuator : MonoBehaviour
     {
-        public void changeFacing(int facingIndex) {
-            GetComponent<CharacterMovement>().changeFacing(facingIndex);
-        }
-
-        public void move(int distanceToTravel)
+        public void move(int facingIndex, int distanceToTravel)
         {
-            GetComponent<CharacterMovement>().move(distanceToTravel);
+            GetComponent<CharacterMovement>().changeFacing(facingIndex);
+            if (facingIndex == 2 || facingIndex == 3)
+                GetComponent<CharacterMovement>().move(-distanceToTravel);
+            else {
+                GetComponent<CharacterMovement>().move(distanceToTravel);
+            }
             GetComponent<DashingGameAgent>().AddReward(-GetComponent<DashingGameAgent>().aiManager.microReward);
             GetComponent<DashingGameAgent>().isMove = 0;
         }
