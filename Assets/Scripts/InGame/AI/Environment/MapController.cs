@@ -11,7 +11,8 @@ namespace FYP.InGame.AI.Environment
     public class MapController : Singleton<MapController>
     {
         public static Action onMapLoaded = delegate { };
-
+        [SerializeField]
+        private Transform mapTransform;
         [SerializeField]
         private Map.ScriptableMap[] mapDatas;
         public Map.ScriptableMap mapData { get; private set; }
@@ -37,7 +38,8 @@ namespace FYP.InGame.AI.Environment
         private void initializeMap() {
             mapDatas = Resources.LoadAll<Map.ScriptableMap>(AIKeys.AIEnvironmentPathPrefix);
             mapData = mapDatas[0];
-            GameObject obj = Instantiate(mapData.mapPrefab, Vector3.zero, Quaternion.identity);
+
+            GameObject obj = Instantiate(mapData.mapPrefab, mapTransform);
 
             grids = new List<Grid>(mapData.mapPrefab.GetComponentsInChildren<Grid>());
             playableGrid = grids.FirstOrDefault(map => map.CompareTag(MapKeys.mapReachableTag));

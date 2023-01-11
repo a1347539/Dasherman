@@ -83,7 +83,7 @@ namespace FYP.InGame.AI.Environment.Character
             // print(newPoint.x + " " + newPoint.y);
 
             Vector2 cellCenterPosition = MapController.Instance.pointToTile(newPoint).worldPositionOfCellCenter;
-            transform.position = new Vector3(
+            transform.localPosition = new Vector3(
                 cellCenterPosition.x,
                 cellCenterPosition.y + MapController.Instance.characterSpriteOffsetInY
             );

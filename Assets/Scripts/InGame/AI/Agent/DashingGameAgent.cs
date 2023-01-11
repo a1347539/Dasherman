@@ -95,7 +95,7 @@ namespace FYP.InGame.AI.Agent
             //if (actions.DiscreteActions[4] == 1) myActuator.attack();
             if (actions.DiscreteActions[5] == 1) myActuator.rechargeMana();
 
-            print($"{actions.DiscreteActions[0]}, {actions.DiscreteActions[1]}, {actions.DiscreteActions[2]}, {actions.DiscreteActions[3]}, {actions.DiscreteActions[4]}, {actions.DiscreteActions[5]}");
+            // print($"{actions.DiscreteActions[0]}, {actions.DiscreteActions[1]}, {actions.DiscreteActions[2]}, {actions.DiscreteActions[3]}, {actions.DiscreteActions[4]}, {actions.DiscreteActions[5]}");
 
             AddReward(-1f / AIManager.Instance.durationInStep);
         }
