@@ -116,7 +116,7 @@ namespace FYP.InGame.AI.Environment.Character
             {
                 // if (enemy.Owner == PhotonNetwork.LocalPlayer) continue;
                 // print($"{enemy.Owner.NickName} take damage");
-                enemy.GetComponent<IDamageable>().takeDamage(DashingDamage, DamageType.dashing);
+                enemy.GetComponent<IDamageable>().takeDamage(DashingDamage, DamageType.dashing, gameObject);
             }
             if (enemiesInPath.Count != 0)
             {
@@ -125,7 +125,6 @@ namespace FYP.InGame.AI.Environment.Character
                 GetComponent<DashingGameAgent>().AddReward(builder.aiManager.reward);
             }
             else {
-                print($"add reward {-builder.aiManager.microReward}");
                 GetComponent<DashingGameAgent>().AddReward(-builder.aiManager.microReward);
             }
         }
@@ -188,7 +187,7 @@ namespace FYP.InGame.AI.Environment.Character
             foreach (GameObject obj in objectsInRange)
             {
                 // sacling already applied
-                obj.GetComponent<IDamageable>().takeDamage(WeaponDamage, DamageType.physicalHit);
+                obj.GetComponent<IDamageable>().takeDamage(WeaponDamage, DamageType.physicalHit, gameObject);
             }
 
             // AI Training
@@ -198,7 +197,6 @@ namespace FYP.InGame.AI.Environment.Character
                 GetComponent<DashingGameAgent>().AddReward(builder.aiManager.reward);
             }
             else {
-                print($"add reward {-builder.aiManager.microReward}");
                 GetComponent<DashingGameAgent>().AddReward(-builder.aiManager.microReward);
             }
         }

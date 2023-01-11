@@ -51,7 +51,7 @@ namespace FYP.InGame.AI.Environment
             mapController.tileMatrix[point.y][point.x].objectEnter(gameObject);
         }
 
-        void IDamageable.takeDamage(int damage, DamageType damageType, PhotonView pv)
+        void IDamageable.takeDamage(int damage, DamageType damageType, GameObject pv)
         {
             int rawHealth = currentHealth - damage;
             if (rawHealth <= 0)

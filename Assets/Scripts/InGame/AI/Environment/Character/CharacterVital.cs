@@ -117,7 +117,7 @@ namespace FYP.InGame.AI.Environment.Character
             onSetMana?.Invoke(currentManaRaw / (float)maxMana);
         }
 
-        void IDamageable.takeDamage(int damage, DamageType damageType, PhotonView pv)
+        void IDamageable.takeDamage(int damage, DamageType damageType, GameObject go)
         {
             int damageAfterDefence;
             if (damageType == DamageType.skillHit)
@@ -151,13 +151,15 @@ namespace FYP.InGame.AI.Environment.Character
             }
 
             // print($"{currentHealth} {damageAfterDefence}");
-            
+
             // no need to decrease health when training
             // setHealth(-damageAfterDefence);
 
             // AI training
-            print($"add reward {-builder.aiManager.reward}");
-            GetComponent<DashingGameAgent>().AddReward(-builder.aiManager.reward);
+            go.GetComponent<DashingGameAgent>().EndEpisode();
+/*            print($"add reward {-builder.aiManager.reward}");
+
+            GetComponent<DashingGameAgent>().AddReward(-builder.aiManager.reward);*/
         }
 
         IEnumerator TakeDamageEffect()
@@ -175,7 +177,7 @@ namespace FYP.InGame.AI.Environment.Character
             // free up tile from current player
             builder.mapController.tileMatrix[controller.currentPoint.y][controller.currentPoint.x].objectExit(gameObject);
 
-            yield return new WaitForSeconds(0.5f);
+            // yield return new WaitForSeconds(0.5f);
 
             if (controller.CharacterState == CharacterController.CharacterStates.died) yield break;
 
@@ -183,7 +185,7 @@ namespace FYP.InGame.AI.Environment.Character
                 spawnPosition.x,
                 spawnPosition.y + builder.mapController.characterSpriteOffsetInY
                 );
-            yield return new WaitForSeconds(2f);
+            // yield return new WaitForSeconds(2f);
 
             controller.setCurrentPoint(spawnPoint, false);
 

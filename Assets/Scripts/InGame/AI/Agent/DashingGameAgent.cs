@@ -25,7 +25,7 @@ namespace FYP.InGame.AI.Agent
         private Actuator myActuator;
 
         public float timer = 0f;
-        public float intervalBetweenMove = 1.2f;
+        private float intervalBetweenMove = 0.5f;
 
         private int selfTeamNumber;
 
@@ -108,6 +108,7 @@ namespace FYP.InGame.AI.Agent
 
             if (actions.DiscreteActions[2] == 1)
             {
+                if (actions.DiscreteActions[1] == 0) { isMove = 0; return; }
                 myActuator.move(actions.DiscreteActions[0], actions.DiscreteActions[1]);
                 timer = intervalBetweenMove;
             }
@@ -126,12 +127,12 @@ namespace FYP.InGame.AI.Agent
         public override void Heuristic(in ActionBuffers actionsOut)
         {
             ActionSegment<int> actions = actionsOut.DiscreteActions;
-            actions[0] = isAiming;
-            actions[1] = facingIndex;
-            actions[2] = Math.Abs(moveDistance);
-            actions[3] = isMove;
-            actions[4] = isAttack;
-            actions[5] = isRechargeMana;
+            actions[0] = facingIndex;
+            GetComponent<CharacterMovement>().changeFacing(facingIndex);
+            actions[1] = Math.Abs(moveDistance);
+            actions[2] = isMove;
+            actions[3] = isAttack;
+            actions[4] = isRechargeMana;
         }
     }
 }

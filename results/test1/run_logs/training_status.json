@@ -2,22 +2,22 @@
     "Swordsman": {
         "checkpoints": [
             {
-                "steps": 3308,
-                "file_path": "results\\test1\\Swordsman\\Swordsman-3308.onnx",
-                "reward": 0.6594375434797257,
-                "creation_time": 1673437031.0800545,
+                "steps": 32433,
+                "file_path": "results\\test1\\Swordsman\\Swordsman-32433.onnx",
+                "reward": null,
+                "creation_time": 1673439754.4970193,
                 "auxillary_file_paths": [
-                    "results\\test1\\Swordsman\\Swordsman-3308.pt"
+                    "results\\test1\\Swordsman\\Swordsman-32433.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 3308,
+            "steps": 32433,
             "file_path": "results\\test1\\Swordsman.onnx",
-            "reward": 0.6594375434797257,
-            "creation_time": 1673437031.0800545,
+            "reward": null,
+            "creation_time": 1673439754.4970193,
             "auxillary_file_paths": [
-                "results\\test1\\Swordsman\\Swordsman-3308.pt"
+                "results\\test1\\Swordsman\\Swordsman-32433.pt"
             ]
         }
     },

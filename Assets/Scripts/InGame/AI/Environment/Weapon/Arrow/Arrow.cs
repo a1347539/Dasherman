@@ -162,7 +162,7 @@ namespace FYP.InGame.AI.Environment.Weapon
             }
             else {
                 // AI Training
-                print($"add reward {-aiManager.microReward}");
+                // print($"add reward {-aiManager.microReward}");
                 user.GetComponent<DashingGameAgent>().AddReward(-aiManager.microReward);
             }
 

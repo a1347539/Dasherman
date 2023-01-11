@@ -48,14 +48,14 @@ namespace FYP.InGame.AI
             durationInStep = timerStart / Time.fixedDeltaTime;
         }
 
-        void Update()
+/*        void Update()
         {
             timeLeft -= Time.deltaTime;
             if (timeLeft < 0)
             {
                 onTimerEnd?.Invoke();
             }
-        }
+        }*/
 
         public IEnumerator continuousGetNewMapCoroutine() {
             for (; ; )

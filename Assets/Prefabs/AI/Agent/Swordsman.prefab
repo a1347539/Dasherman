@@ -1505,7 +1505,7 @@ MonoBehaviour:
   MaxStep: 0
   aiManager: {fileID: 0}
   timer: 0
-  intervalBetweenMove: 3
+  intervalBetweenMove: 0
   isAiming: 0
   facingIndex: 0
   moveDistance: 0

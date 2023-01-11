@@ -30,7 +30,7 @@ namespace FYP.InGame.AI.Agent
 
         public void rechargeMana() {
             GetComponent<CharacterVital>().rechargeMana();
-            GetComponent<DashingGameAgent>().AddReward(GetComponent<DashingGameAgent>().aiManager.microReward);
+            // GetComponent<DashingGameAgent>().AddReward(GetComponent<DashingGameAgent>().aiManager.microReward);
             GetComponent<DashingGameAgent>().isRechargeMana = 0;
         }
     }
