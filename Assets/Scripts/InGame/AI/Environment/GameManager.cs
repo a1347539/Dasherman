@@ -6,8 +6,11 @@ using UnityEngine;
 
 namespace FYP.InGame.AI.Environment
 {
-    public class GameManager : Singleton<GameManager>
+    public class GameManager : MonoBehaviour
     {
+        [SerializeField]
+        private MapController mapController;
+
         public bool isSameTeam(GameObject a, GameObject b) {
             return a.GetComponent<CharacterBuilder>().teamNumber == b.GetComponent<CharacterBuilder>().teamNumber;
         }
@@ -19,10 +22,10 @@ namespace FYP.InGame.AI.Environment
             do
             {
                 // print("get spawn point");
-                x = Random.Range(0, MapController.Instance.playableMapSize.x);
-                y = Random.Range(0, MapController.Instance.playableMapSize.y);
+                x = Random.Range(0, mapController.playableMapSize.x);
+                y = Random.Range(0, mapController.playableMapSize.y);
             }
-            while (MapController.Instance.tileMatrix[y][x].tileState != Tile.TileStates.empty);
+            while (mapController.tileMatrix[y][x].tileState != Tile.TileStates.empty);
             return new Point(x, y);
         }
     }

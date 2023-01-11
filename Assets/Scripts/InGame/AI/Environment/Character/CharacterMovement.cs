@@ -113,12 +113,12 @@ namespace FYP.InGame.AI.Environment.Character
             Vector2 deltaPosition = mouseButtonData.getDeltaFromCurrentToOriginInWorldSpace(Camera.main.ScreenToWorldPoint(position));
             if (facing == 1 || facing == 3)
             {
-                distanceToTravel = (int)(deltaPosition.y / MapController.Instance.cellSize);
+                distanceToTravel = (int)(deltaPosition.y / builder.mapController.cellSize);
             }
             // facing horizontal direction 
             else if (facing == 0 || facing == 2)
             {
-                distanceToTravel = (int)(deltaPosition.x / MapController.Instance.cellSize);
+                distanceToTravel = (int)(deltaPosition.x / builder.mapController.cellSize);
             }
             if (facing == 0 || facing == 1)
             {
@@ -141,7 +141,7 @@ namespace FYP.InGame.AI.Environment.Character
                 {
                     if (tile.tileState == Tile.TileStates.hasPlayer)
                     {
-                        if (tile.currentObjects.Any(go => GameManager.Instance.isSameTeam(gameObject, go)))
+                        if (tile.currentObjects.Any(go => builder.gameManager.isSameTeam(gameObject, go)))
                         {
                             print("a player in the same team");
                             return false;
@@ -186,9 +186,9 @@ namespace FYP.InGame.AI.Environment.Character
             switch (facing)
             {
                 case 0:
-                    for (int i = controller.currentPoint.x + 1; i < MapController.Instance.playableMapSize.x; ++i)
+                    for (int i = controller.currentPoint.x + 1; i < builder.mapController.playableMapSize.x; ++i)
                     {
-                        if (!isTileWalkable(MapController.Instance.tileMatrix[controller.currentPoint.y][i]))
+                        if (!isTileWalkable(builder.mapController.tileMatrix[controller.currentPoint.y][i]))
                         {
                             return distance;
                         }
@@ -198,7 +198,7 @@ namespace FYP.InGame.AI.Environment.Character
                 case 1:
                     for (int i = controller.currentPoint.y - 1; i >= 0; --i)
                     {
-                        if (!isTileWalkable(MapController.Instance.tileMatrix[i][controller.currentPoint.x]))
+                        if (!isTileWalkable(builder.mapController.tileMatrix[i][controller.currentPoint.x]))
                         {
                             return distance;
                         }
@@ -208,7 +208,7 @@ namespace FYP.InGame.AI.Environment.Character
                 case 2:
                     for (int i = controller.currentPoint.x - 1; i >= 0; --i)
                     {
-                        if (!isTileWalkable(MapController.Instance.tileMatrix[controller.currentPoint.y][i]))
+                        if (!isTileWalkable(builder.mapController.tileMatrix[controller.currentPoint.y][i]))
                         {
                             return distance;
                         }
@@ -216,9 +216,9 @@ namespace FYP.InGame.AI.Environment.Character
                     }
                     break;
                 case 3:
-                    for (int i = controller.currentPoint.y + 1; i < MapController.Instance.playableMapSize.y; ++i)
+                    for (int i = controller.currentPoint.y + 1; i < builder.mapController.playableMapSize.y; ++i)
                     {
-                        if (!isTileWalkable(MapController.Instance.tileMatrix[i][controller.currentPoint.x]))
+                        if (!isTileWalkable(builder.mapController.tileMatrix[i][controller.currentPoint.x]))
                         {
                             return distance;
                         }

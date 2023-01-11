@@ -12,7 +12,7 @@ namespace FYP.InGame.AI.Agent
     {
         public List<int> getProcessedTileMap()
         {
-            return AIManager.Instance.processedTileMatrix;
+            return GetComponent<CharacterBuilder>().aiManager.processedTileMatrix;
         }
 
 

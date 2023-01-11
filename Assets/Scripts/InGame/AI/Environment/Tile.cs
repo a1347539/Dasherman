@@ -22,11 +22,11 @@ namespace FYP.InGame.AI.Environment
 
         public List<GameObject> currentObjects { get; private set; }
 
-        public Tile(Point p, Vector2 worldPos)
+        public Tile(Point p, Vector2 worldPos, MapController mapController)
         {
             currentObjects = new List<GameObject>();
             point = p;
-            float offset = MapController.Instance.cellSize / 2;
+            float offset = mapController.cellSize / 2;
             worldPositionOfCellCenter = new Vector2(
                 worldPos.x + offset,
                 worldPos.y - offset

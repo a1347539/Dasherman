@@ -1,11 +1,18 @@
 using FYP.Global.InGame;
+using FYP.InGame.Photon;
 using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 using UnityEngine;
 
 namespace FYP.InGame.AI.Environment.Character
 {
     public class CharacterBuilder : MonoBehaviour
     {
+        public MapController mapController;
+        public AIManager aiManager;
+        public GameManager gameManager;
+        public MapObjectManager mapObjectManager;
+
         // for AI trainning
         public int teamNumber;
 
@@ -29,6 +36,11 @@ namespace FYP.InGame.AI.Environment.Character
 
         private void Awake()
         {
+            mapController = transform.parent.parent.GetComponent<Containers>().mapController;
+            aiManager = transform.parent.parent.GetComponent<Containers>().aiManager;
+            gameManager = transform.parent.parent.GetComponent<Containers>().gameManager;
+            mapObjectManager = transform.parent.parent.GetComponent<Containers>().mapObjectManager;
+
             vital = GetComponent<CharacterVital>();
             controller = GetComponent<CharacterController>();
             attackController = GetComponent<CharacterAttackController>();
@@ -43,8 +55,6 @@ namespace FYP.InGame.AI.Environment.Character
             uiManager.TeamIndicator.setTeamColor(teamNumber);
 
             Point p = point;
-
-            transform.SetParent(MapObjectManager.Instance.characterContainer);
             controller.setCurrentPoint(p, false);
 
             vital.initializeStats(Mathf.FloorToInt(sc.baseHealth * sc.healthScaling),
@@ -54,7 +64,7 @@ namespace FYP.InGame.AI.Environment.Character
                 sc.magicDefenceScaling);
 
             controller.CharacterState = CharacterController.CharacterStates.idle;
-            transform.localScale = MapController.Instance.characterSpriteScaling;
+            transform.localScale = mapController.characterSpriteScaling;
 
             isInitialized = true;
             attackController.initializeStats(sc.baseDashingDamage, sc.physicalDamageScaling, sc.magicDamageScaling, weapon, attackType);

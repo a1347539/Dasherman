@@ -82,14 +82,14 @@ namespace FYP.InGame.AI.Environment.Character
         {
             // print(newPoint.x + " " + newPoint.y);
 
-            Vector2 cellCenterPosition = MapController.Instance.pointToTile(newPoint).worldPositionOfCellCenter;
+            Vector2 cellCenterPosition = builder.mapController.pointToTile(newPoint).worldPositionOfCellCenter;
             transform.localPosition = new Vector3(
                 cellCenterPosition.x,
-                cellCenterPosition.y + MapController.Instance.characterSpriteOffsetInY
+                cellCenterPosition.y + builder.mapController.characterSpriteOffsetInY
             );
 
-            MapController.Instance.tileMatrix[oldPoint.y][oldPoint.x].objectExit(gameObject);
-            MapController.Instance.tileMatrix[newPoint.y][newPoint.x].objectEnter(gameObject);
+            builder.mapController.tileMatrix[oldPoint.y][oldPoint.x].objectExit(gameObject);
+            builder.mapController.tileMatrix[newPoint.y][newPoint.x].objectEnter(gameObject);
             currentPoint = newPoint;
             builder.Sprite.GetComponent<SortingGroup>().sortingOrder = newPoint.y;
 

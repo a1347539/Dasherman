@@ -92,7 +92,7 @@ namespace FYP.InGame.AI.Environment.Character
 
             // AI Training
             // print($"add reward {deltaManaRawValue}");
-            GetComponent<DashingGameAgent>().AddReward(AIManager.Instance.microReward);
+            GetComponent<DashingGameAgent>().AddReward(builder.aiManager.microReward);
         }
 
         public void setHealth(int deltaHealth)
@@ -142,12 +142,12 @@ namespace FYP.InGame.AI.Environment.Character
                     do
                     {
                         // print("get spawn point");
-                        respawnX = Random.Range(0, MapController.Instance.playableMapSize.x);
-                        respawnY = Random.Range(0, MapController.Instance.playableMapSize.y);
+                        respawnX = Random.Range(0, builder.mapController.playableMapSize.x);
+                        respawnY = Random.Range(0, builder.mapController.playableMapSize.y);
                     }
-                    while (MapController.Instance.tileMatrix[respawnY][respawnX].tileState != Tile.TileStates.empty);
+                    while (builder.mapController.tileMatrix[respawnY][respawnX].tileState != Tile.TileStates.empty);
 
-                    Vector2 spawnPosition = MapController.Instance.tileMatrix[respawnY][respawnX].worldPositionOfCellCenter;
+                    Vector2 spawnPosition = builder.mapController.tileMatrix[respawnY][respawnX].worldPositionOfCellCenter;
 
                     controller.CharacterState = CharacterController.CharacterStates.respawning;
                     StartCoroutine(respawnTeleportCoroutine(new Point(respawnX, respawnY), spawnPosition));
@@ -177,7 +177,7 @@ namespace FYP.InGame.AI.Environment.Character
             uiManager.deactivateAllUI();
 
             // free up tile from current player
-            MapController.Instance.tileMatrix[controller.currentPoint.y][controller.currentPoint.x].objectExit(gameObject);
+            builder.mapController.tileMatrix[controller.currentPoint.y][controller.currentPoint.x].objectExit(gameObject);
 
             yield return new WaitForSeconds(0.5f);
 
@@ -185,7 +185,7 @@ namespace FYP.InGame.AI.Environment.Character
 
             transform.position = new Vector3(
                 spawnPosition.x,
-                spawnPosition.y + MapController.Instance.characterSpriteOffsetInY
+                spawnPosition.y + builder.mapController.characterSpriteOffsetInY
                 );
             yield return new WaitForSeconds(2f);
 

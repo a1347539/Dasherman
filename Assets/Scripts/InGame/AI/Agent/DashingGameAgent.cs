@@ -11,11 +11,16 @@ using UnityEngine.UIElements;
 using static FYP.Global.InputUtilities;
 using CharacterController = FYP.InGame.AI.Environment.Character.CharacterController;
 using static FYP.InGame.AI.Environment.Character.CharacterController;
+using FYP.InGame.Map;
+using MapController = FYP.InGame.AI.Environment.MapController;
 
 namespace FYP.InGame.AI.Agent
 {
     public class DashingGameAgent : Unity.MLAgents.Agent
     {
+        private AIManager aiManager;
+        private MapController mapController;
+
         private Sensor mySensor;
         private Actuator myActuator;
 
@@ -30,7 +35,10 @@ namespace FYP.InGame.AI.Agent
 
         private void Awake()
         {
-            AIManager.Instance.onTimerEnd += handleTimerEnd;
+            aiManager = transform.parent.parent.GetComponent<Containers>().aiManager;
+            mapController = transform.parent.parent.GetComponent<Containers>().mapController;
+
+            aiManager.onTimerEnd += handleTimerEnd;
             mySensor = GetComponent<Sensor>();
             myActuator = GetComponent<Actuator>();
             selfTeamNumber = GetComponent<CharacterBuilder>().teamNumber;
@@ -51,8 +59,8 @@ namespace FYP.InGame.AI.Agent
         public override void OnEpisodeBegin()
         {
             if (!enabled) return;
-            AIManager.Instance.resetEnvironment();
-            AIManager.Instance.resetTimer();
+            aiManager.resetEnvironment();
+            aiManager.resetTimer();
         }
 
         public override void CollectObservations(VectorSensor sensor)
@@ -63,9 +71,9 @@ namespace FYP.InGame.AI.Agent
             sensor.AddObservation(mySensor.getMana());
             Vector2 p = mySensor.getSelfPosition();
             sensor.AddObservation(p);
-            sensor.AddObservation(MapController.Instance.playableMapSize);
+            sensor.AddObservation(mapController.playableMapSize);
 
-            int selfCellIndex = (int)(p.y * MapController.Instance.playableMapSize.x + p.x);
+            int selfCellIndex = (int)(p.y * mapController.playableMapSize.x + p.x);
 
             // add all map states
             List<int> mapStates = mySensor.getProcessedTileMap();
@@ -97,7 +105,7 @@ namespace FYP.InGame.AI.Agent
 
             // print($"{actions.DiscreteActions[0]}, {actions.DiscreteActions[1]}, {actions.DiscreteActions[2]}, {actions.DiscreteActions[3]}, {actions.DiscreteActions[4]}, {actions.DiscreteActions[5]}");
 
-            AddReward(-1f / AIManager.Instance.durationInStep);
+            AddReward(-1f / aiManager.durationInStep);
         }
 
 

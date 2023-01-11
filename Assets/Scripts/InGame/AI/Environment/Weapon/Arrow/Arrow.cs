@@ -1,4 +1,6 @@
 using FYP.InGame.AI.Agent;
+using FYP.InGame.AI.Environment.Character;
+using FYP.InGame.Map;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,11 @@ namespace FYP.InGame.AI.Environment.Weapon
 {
     public class Arrow : MonoBehaviour
     {
+        public MapController mapController;
+        public AIManager aiManager;
+        public GameManager gameManager;
+        public MapObjectManager mapObjectManager;
+
         private GameObject sprite;
 
         private int damage;
@@ -60,7 +67,7 @@ namespace FYP.InGame.AI.Environment.Weapon
                 transform.position += new Vector3(0, -arrowSpeed * Time.deltaTime);
             }
             float distance = Vector2.Distance(startPosition, transform.position);
-            if (distance > MapController.Instance.cellSize)
+            if (distance > mapController.cellSize)
             {
                 ++CellMoved;
                 startPosition = transform.position;
@@ -69,6 +76,11 @@ namespace FYP.InGame.AI.Environment.Weapon
 
         public void initialize(InGame.Weapon.ScriptableArrow sa, int facing, Point origin, float damageScaling, int sortingOrder, GameObject user)
         {
+            mapController = user.GetComponent<CharacterBuilder>().mapController;
+            aiManager = user.GetComponent<CharacterBuilder>().aiManager;
+            gameManager = user.GetComponent<CharacterBuilder>().gameManager;
+            mapObjectManager = user.GetComponent<CharacterBuilder>().mapObjectManager;
+
             damage = sa.damage;
             arrowSpeed = sa.speed;
             direction = facing;
@@ -96,11 +108,11 @@ namespace FYP.InGame.AI.Environment.Weapon
             Tile t;
             if (direction == 0)
             {
-                if (origin.x + adjustedCellMoved >= MapController.Instance.playableMapSize.x)
+                if (origin.x + adjustedCellMoved >= mapController.playableMapSize.x)
                 {
                     Destroy(gameObject); return;
                 }
-                t = MapController.Instance.tileMatrix[origin.y][origin.x + adjustedCellMoved];
+                t = mapController.tileMatrix[origin.y][origin.x + adjustedCellMoved];
             }
             else if (direction == 1)
             {
@@ -108,7 +120,7 @@ namespace FYP.InGame.AI.Environment.Weapon
                 {
                     Destroy(gameObject); return;
                 }
-                t = MapController.Instance.tileMatrix[origin.y - adjustedCellMoved][origin.x];
+                t = mapController.tileMatrix[origin.y - adjustedCellMoved][origin.x];
             }
             else if (direction == 2)
             {
@@ -116,21 +128,21 @@ namespace FYP.InGame.AI.Environment.Weapon
                 {
                     Destroy(gameObject); return;
                 }
-                t = MapController.Instance.tileMatrix[origin.y][origin.x - adjustedCellMoved];
+                t = mapController.tileMatrix[origin.y][origin.x - adjustedCellMoved];
             }
             else
             {
-                if (origin.y + adjustedCellMoved >= MapController.Instance.playableMapSize.y)
+                if (origin.y + adjustedCellMoved >= mapController.playableMapSize.y)
                 {
                     Destroy(gameObject); return;
                 }
-                t = MapController.Instance.tileMatrix[origin.y + adjustedCellMoved][origin.x];
+                t = mapController.tileMatrix[origin.y + adjustedCellMoved][origin.x];
             }
 
             if (t.tileState == Tile.TileStates.hasPlayer)
             {
                 objectsInRange.AddRange(t.currentObjects.
-                    Where(go => !GameManager.Instance.isSameTeam(user, go)));
+                    Where(go => !gameManager.isSameTeam(user, go)));
             }
             else if (t.tileState == Tile.TileStates.hasBreakable)
             {
@@ -145,13 +157,13 @@ namespace FYP.InGame.AI.Environment.Weapon
             if (objectsInRange.Count != 0)
             {
                 // AI Training
-                print($"add reward {AIManager.Instance.reward}");
-                user.GetComponent<DashingGameAgent>().AddReward(AIManager.Instance.reward);
+                print($"add reward {aiManager.reward}");
+                user.GetComponent<DashingGameAgent>().AddReward(aiManager.reward);
             }
             else {
                 // AI Training
-                print($"add reward {-AIManager.Instance.microReward}");
-                user.GetComponent<DashingGameAgent>().AddReward(-AIManager.Instance.microReward);
+                print($"add reward {-aiManager.microReward}");
+                user.GetComponent<DashingGameAgent>().AddReward(-aiManager.microReward);
             }
 
             if (objectsInRange.Count > 0) { Destroy(gameObject); }

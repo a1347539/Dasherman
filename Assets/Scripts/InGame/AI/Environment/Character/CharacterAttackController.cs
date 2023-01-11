@@ -74,7 +74,7 @@ namespace FYP.InGame.AI.Environment.Character
                     {
                         for (int i = oldPoint.y + 1; i <= newPoint.y; ++i)
                         {
-                            playersInPath.AddRange(MapController.Instance.tileMatrix[i][newPoint.x].currentObjects.Where(ob => !GameManager.Instance.isSameTeam(gameObject, ob)));
+                            playersInPath.AddRange(builder.mapController.tileMatrix[i][newPoint.x].currentObjects.Where(ob => !builder.gameManager.isSameTeam(gameObject, ob)));
                         }
                     }
                     else
@@ -82,7 +82,7 @@ namespace FYP.InGame.AI.Environment.Character
                         // oldPoint.y > newPoint.y
                         for (int i = oldPoint.y - 1; i >= newPoint.y; --i)
                         {
-                            playersInPath.AddRange(MapController.Instance.tileMatrix[i][newPoint.x].currentObjects.Where(ob => !GameManager.Instance.isSameTeam(gameObject, ob)));
+                            playersInPath.AddRange(builder.mapController.tileMatrix[i][newPoint.x].currentObjects.Where(ob => !builder.gameManager.isSameTeam(gameObject, ob)));
                         }
                     }
                 }
@@ -92,14 +92,14 @@ namespace FYP.InGame.AI.Environment.Character
                     {
                         for (int i = oldPoint.x + 1; i <= newPoint.x; ++i)
                         {
-                            playersInPath.AddRange(MapController.Instance.tileMatrix[newPoint.y][i].currentObjects.Where(ob => !GameManager.Instance.isSameTeam(gameObject, ob)));
+                            playersInPath.AddRange(builder.mapController.tileMatrix[newPoint.y][i].currentObjects.Where(ob => !builder.gameManager.isSameTeam(gameObject, ob)));
                         }
                     }
                     else
                     {
                         for (int i = oldPoint.x - 1; i >= newPoint.x; --i)
                         {
-                            playersInPath.AddRange(MapController.Instance.tileMatrix[newPoint.y][i].currentObjects.Where(ob => !GameManager.Instance.isSameTeam(gameObject, ob)));
+                            playersInPath.AddRange(builder.mapController.tileMatrix[newPoint.y][i].currentObjects.Where(ob => !builder.gameManager.isSameTeam(gameObject, ob)));
                         }
                     }
                 }
@@ -121,12 +121,12 @@ namespace FYP.InGame.AI.Environment.Character
             if (enemiesInPath.Count != 0)
             {
                 // AI Training
-                print($"add reward {AIManager.Instance.reward}");
-                GetComponent<DashingGameAgent>().AddReward(AIManager.Instance.reward);
+                print($"add reward {builder.aiManager.reward}");
+                GetComponent<DashingGameAgent>().AddReward(builder.aiManager.reward);
             }
             else {
-                print($"add reward {-AIManager.Instance.microReward}");
-                GetComponent<DashingGameAgent>().AddReward(-AIManager.Instance.microReward);
+                print($"add reward {-builder.aiManager.microReward}");
+                GetComponent<DashingGameAgent>().AddReward(-builder.aiManager.microReward);
             }
         }
 
@@ -167,15 +167,15 @@ namespace FYP.InGame.AI.Environment.Character
             List<GameObject> objectsInRange = new List<GameObject>();
             for (int i = controller.currentPoint.x - 3, p = 0; p < InGame.Weapon.ScriptableWeapon.SIZE; ++i, ++p)
             {
-                if (i < 0 || i >= MapController.Instance.playableMapSize.x) { continue; }
+                if (i < 0 || i >= builder.mapController.playableMapSize.x) { continue; }
                 for (int j = controller.currentPoint.y - 3, q = 0; q < InGame.Weapon.ScriptableWeapon.SIZE; ++j, ++q)
                 {
-                    if (j < 0 || j >= MapController.Instance.playableMapSize.y) { continue; }
+                    if (j < 0 || j >= builder.mapController.playableMapSize.y) { continue; }
                     if (weapon.GetComponent<WeaponController>().ranges[facingIndex][q].column[p])
                     {
-                        if (MapController.Instance.tileMatrix[j][i].tileState == Tile.TileStates.hasPlayer)
+                        if (builder.mapController.tileMatrix[j][i].tileState == Tile.TileStates.hasPlayer)
                         {
-                            objectsInRange.AddRange(MapController.Instance.tileMatrix[j][i].currentObjects.Where(ob => !GameManager.Instance.isSameTeam(gameObject, ob)));
+                            objectsInRange.AddRange(builder.mapController.tileMatrix[j][i].currentObjects.Where(ob => !builder.gameManager.isSameTeam(gameObject, ob)));
                         }
 /*                        else if (MapController.Instance.tileMatrix[j][i].tileState == Tile.TileStates.hasBreakable)
                         {
@@ -194,12 +194,12 @@ namespace FYP.InGame.AI.Environment.Character
             // AI Training
             if (objectsInRange.Count != 0)
             {
-                print($"add reward {AIManager.Instance.reward}");
-                GetComponent<DashingGameAgent>().AddReward(AIManager.Instance.reward);
+                print($"add reward {builder.aiManager.reward}");
+                GetComponent<DashingGameAgent>().AddReward(builder.aiManager.reward);
             }
             else {
-                print($"add reward {-AIManager.Instance.microReward}");
-                GetComponent<DashingGameAgent>().AddReward(-AIManager.Instance.microReward);
+                print($"add reward {-builder.aiManager.microReward}");
+                GetComponent<DashingGameAgent>().AddReward(-builder.aiManager.microReward);
             }
         }
     }

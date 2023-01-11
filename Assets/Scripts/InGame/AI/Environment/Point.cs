@@ -11,13 +11,13 @@ namespace FYP.InGame.AI.Environment
 
         public Point(int _x, int _y) { x = _x; y = _y; }
 
-        public static Point worldToPoint(Vector2 pos)
+/*        public static Point worldToPoint(Vector2 pos)
         {
             return new Point(
                 (int)((pos.x - MapController.Instance.playableAreaOrigin.x) / MapController.Instance.cellSize),
                 (int)((MapController.Instance.playableAreaOrigin.y - pos.y) / MapController.Instance.cellSize)
                 );
-        }
+        }*/
 
         public static byte[] serialize(object obj)
         {

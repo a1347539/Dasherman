@@ -8,9 +8,9 @@ using FYP.Global.InGame;
 
 namespace FYP.InGame.AI.Environment
 {
-    public class MapController : Singleton<MapController>
+    public class MapController : MonoBehaviour
     {
-        public static Action onMapLoaded = delegate { };
+        public Action onMapLoaded = delegate { };
         [SerializeField]
         private Transform mapTransform;
         [SerializeField]
@@ -49,7 +49,7 @@ namespace FYP.InGame.AI.Environment
             cellSize = playableGrid.cellSize.x;
             playableTilemapBaseLayer = playableGrid.transform.GetChild(0).GetComponent<Tilemap>();
 
-            playableAreaOrigin = new Vector2(
+            playableAreaOrigin = new Vector3(
                 playableTilemapBaseLayer.cellBounds.xMin * cellSize,
                 playableTilemapBaseLayer.cellBounds.yMax * cellSize
                 );
@@ -67,7 +67,7 @@ namespace FYP.InGame.AI.Environment
                 {
                     Tile tile = new Tile(new Point(j, i), new Vector2(
                         playableAreaOrigin.x + cellSize * j, playableAreaOrigin.y - cellSize * i
-                        ));
+                        ), this);
 
                     tileMatrix[i].Add(tile);
                 }

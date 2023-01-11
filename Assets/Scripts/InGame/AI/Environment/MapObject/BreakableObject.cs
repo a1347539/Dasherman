@@ -7,6 +7,11 @@ namespace FYP.InGame.AI.Environment
 {
     public class BreakableObject : MonoBehaviour, IDamageable
     {
+        public MapController mapController;
+        public AIManager aiManager;
+        public GameManager gameManager;
+        public MapObjectManager mapObjectManager;
+
         public int currentHealth { get; private set; }
 
         public int debugHealth;
@@ -20,23 +25,30 @@ namespace FYP.InGame.AI.Environment
             onChangeCurrenPoint(currentPoint, p);
         }
 
+        private void Awake()
+        {
+            mapController = transform.parent.parent.GetComponent<Containers>().mapController;
+            aiManager = transform.parent.parent.GetComponent<Containers>().aiManager;
+            gameManager = transform.parent.parent.GetComponent<Containers>().gameManager;
+            mapObjectManager = transform.parent.parent.GetComponent<Containers>().mapObjectManager;
+        }
+
         public void initialize(int health, Point point)
         {
-            Vector2 cellCenterPosition = MapController.Instance.pointToTile(point).worldPositionOfCellCenter;
+            Vector2 cellCenterPosition = mapController.pointToTile(point).worldPositionOfCellCenter;
             transform.localPosition = new Vector3(
                 cellCenterPosition.x,
-                cellCenterPosition.y + MapController.Instance.objectSpriteOffsetInY
+                cellCenterPosition.y + mapController.objectSpriteOffsetInY
                 );
 
-            transform.localScale = MapController.Instance.objectSpriteScaling;
+            transform.localScale = mapController.objectSpriteScaling;
 
-            transform.SetParent(MapObjectManager.Instance.breakableObjectContainer);
             maxHealth = health;
             debugHealth = health;
             currentHealth = health;
             currentPoint = point;
             GetComponent<Renderer>().sortingOrder = point.y;
-            MapController.Instance.tileMatrix[point.y][point.x].objectEnter(gameObject);
+            mapController.tileMatrix[point.y][point.x].objectEnter(gameObject);
         }
 
         void IDamageable.takeDamage(int damage, DamageType damageType, PhotonView pv)
@@ -44,7 +56,7 @@ namespace FYP.InGame.AI.Environment
             int rawHealth = currentHealth - damage;
             if (rawHealth <= 0)
             {
-                MapController.Instance.tileMatrix[currentPoint.y][currentPoint.x].objectExit(gameObject);
+                mapController.tileMatrix[currentPoint.y][currentPoint.x].objectExit(gameObject);
                 transform.position = BreakableObjectKeys.DeadObjectPosition;
                 return;
             }
@@ -56,14 +68,14 @@ namespace FYP.InGame.AI.Environment
         {
             // print(newPoint.x + " " + newPoint.y);
 
-            Vector2 cellCenterPosition = MapController.Instance.pointToTile(newPoint).worldPositionOfCellCenter;
+            Vector2 cellCenterPosition = mapController.pointToTile(newPoint).worldPositionOfCellCenter;
             transform.localPosition = new Vector3(
                 cellCenterPosition.x,
-                cellCenterPosition.y + MapController.Instance.objectSpriteOffsetInY
+                cellCenterPosition.y + mapController.objectSpriteOffsetInY
                 );
 
-            MapController.Instance.tileMatrix[oldPoint.y][oldPoint.x].objectExit(gameObject);
-            MapController.Instance.tileMatrix[newPoint.y][newPoint.x].objectEnter(gameObject);
+            mapController.tileMatrix[oldPoint.y][oldPoint.x].objectExit(gameObject);
+            mapController.tileMatrix[newPoint.y][newPoint.x].objectEnter(gameObject);
             currentPoint = newPoint;
             GetComponent<Renderer>().sortingOrder = newPoint.y;
         }

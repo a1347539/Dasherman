@@ -9,11 +9,16 @@ using Random = UnityEngine.Random;
 
 namespace FYP.InGame.AI.Environment
 {
-    public class MapObjectManager : Singleton<MapObjectManager>
+    public class MapObjectManager : MonoBehaviour
     {
         public Action spawnCharacterAvailable;
 
         public Action spawnBreakableObjectAvailable;
+
+        [SerializeField]
+        private MapController mapController;
+        [SerializeField]
+        private GameManager gameManager;
 
         [SerializeField]
         public Transform breakableObjectContainer;
@@ -25,8 +30,8 @@ namespace FYP.InGame.AI.Environment
 
         private void Awake()
         {
-            MapController.onMapLoaded += handleSpawnCharacters;
-            MapController.onMapLoaded += handlePlaceBreakableObjects;
+            mapController.onMapLoaded += handleSpawnCharacters;
+            mapController.onMapLoaded += handlePlaceBreakableObjects;
         }
 
         void Start()
@@ -41,8 +46,8 @@ namespace FYP.InGame.AI.Environment
 
         private void OnDestroy()
         {
-            MapController.onMapLoaded -= handleSpawnCharacters;
-            MapController.onMapLoaded -= handlePlaceBreakableObjects;
+            mapController.onMapLoaded -= handleSpawnCharacters;
+            mapController.onMapLoaded -= handlePlaceBreakableObjects;
         }
 
         private void handleSpawnCharacters()
@@ -68,10 +73,10 @@ namespace FYP.InGame.AI.Environment
             InGame.Weapon.ScriptableWeapon sw = weaponDatas.First(data => data.weaponID == sc.defaultWeaponID);
 
             GameObject weapon = Instantiate(sw.weaponPrefab, Vector2.zero, Quaternion.identity);
-            GameObject character = Instantiate(sc.characterPrefab, Vector2.zero, Quaternion.identity);
+            GameObject character = Instantiate(sc.characterPrefab, characterContainer);
 
             weapon.GetComponent<WeaponController>().initialize(sw, character);
-            character.GetComponent<CharacterBuilder>().initialize(GameManager.Instance.getEmptyPoint(), sc, weapon, sw.attackType, teamId);
+            character.GetComponent<CharacterBuilder>().initialize(gameManager.getEmptyPoint(), sc, weapon, sw.attackType, teamId);
 
             return character;
         }
@@ -81,10 +86,10 @@ namespace FYP.InGame.AI.Environment
             for (int i = 0; i < numberOfBreakableObject; ++i)
             {
                 int ObjectIndex = Random.Range(0, breakableObjectDatas.Length - 1);
-                GameObject obj = Instantiate(breakableObjectDatas[ObjectIndex].prefab, Vector2.zero, Quaternion.identity);
+                GameObject obj = Instantiate(breakableObjectDatas[ObjectIndex].prefab, breakableObjectContainer);
                 if (obj != null)
                 {
-                    obj.GetComponent<BreakableObject>().initialize(breakableObjectDatas[ObjectIndex].health, GameManager.Instance.getEmptyPoint());
+                    obj.GetComponent<BreakableObject>().initialize(breakableObjectDatas[ObjectIndex].health, gameManager.getEmptyPoint());
                 }
             }
         }

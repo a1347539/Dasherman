@@ -927,6 +927,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c03dc95a743b1db49b396a0636f63933, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterBuilder: {fileID: 6683639214942914441}
 --- !u!1 &6156395920818534517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1400,6 +1401,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 673bec228567b6f4cafeb26398e783fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapController: {fileID: 0}
+  aiManager: {fileID: 0}
+  gameManager: {fileID: 0}
+  mapObjectManager: {fileID: 0}
   teamNumber: 0
   weaponOffsetTransform: {fileID: 2551912290297810551}
   uiManager: {fileID: 527570672635655370}

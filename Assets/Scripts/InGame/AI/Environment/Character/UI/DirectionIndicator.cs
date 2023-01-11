@@ -6,12 +6,14 @@ namespace FYP.InGame.AI.Environment.Character
 {
     public class DirectionIndicator : MonoBehaviour
     {
+        [SerializeField]
+        private CharacterBuilder characterBuilder;
         private RectTransform rectTransform;
 
         void Start()
         {
             rectTransform = GetComponent<RectTransform>();
-            rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, MapController.Instance.cellSize * 51.3f);
+            rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, characterBuilder.mapController.cellSize * 51.3f);
         }
 
         public void scaleIndicator(int direction, int distance)
