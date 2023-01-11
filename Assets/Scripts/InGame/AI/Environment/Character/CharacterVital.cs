@@ -89,10 +89,6 @@ namespace FYP.InGame.AI.Environment.Character
             currentManaRaw += deltaManaRawValue;
             currentMana = (int)currentManaRaw;
             onSetMana?.Invoke(currentManaRaw / maxMana);
-
-            // AI Training
-            // print($"add reward {deltaManaRawValue}");
-            GetComponent<DashingGameAgent>().AddReward(builder.aiManager.microReward);
         }
 
         public void setHealth(int deltaHealth)
@@ -160,8 +156,8 @@ namespace FYP.InGame.AI.Environment.Character
             // setHealth(-damageAfterDefence);
 
             // AI training
-            print($"add reward {-damageAfterDefence}");
-            GetComponent<DashingGameAgent>().AddReward(-damageAfterDefence);
+            print($"add reward {-builder.aiManager.reward}");
+            GetComponent<DashingGameAgent>().AddReward(-builder.aiManager.reward);
         }
 
         IEnumerator TakeDamageEffect()

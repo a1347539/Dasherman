@@ -18,7 +18,7 @@ namespace FYP.InGame.AI.Agent
 {
     public class DashingGameAgent : Unity.MLAgents.Agent
     {
-        private AIManager aiManager;
+        public AIManager aiManager;
         private MapController mapController;
 
         private Sensor mySensor;
@@ -92,7 +92,10 @@ namespace FYP.InGame.AI.Agent
             // shouldDoMovingAction, facing, moveDistance, shouldMove, shouldAttack, shouldRechargeMana
             if (GetComponent<CharacterController>().CharacterState != CharacterStates.idle && GetComponent<CharacterController>().CharacterState != CharacterStates.aiming)
                 return;
-
+            if (actions.DiscreteActions[5] == 1) { 
+                myActuator.rechargeMana();
+                return;
+            }
             if (actions.DiscreteActions[0] == 1) myActuator.changeFacing(actions.DiscreteActions[1]);
 
             if (actions.DiscreteActions[3] == 1)
@@ -101,7 +104,6 @@ namespace FYP.InGame.AI.Agent
                 else myActuator.move(actions.DiscreteActions[2]);
             }
             //if (actions.DiscreteActions[4] == 1) myActuator.attack();
-            if (actions.DiscreteActions[5] == 1) myActuator.rechargeMana();
 
             // print($"{actions.DiscreteActions[0]}, {actions.DiscreteActions[1]}, {actions.DiscreteActions[2]}, {actions.DiscreteActions[3]}, {actions.DiscreteActions[4]}, {actions.DiscreteActions[5]}");
 
