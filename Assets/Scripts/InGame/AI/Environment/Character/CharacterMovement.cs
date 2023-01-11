@@ -89,9 +89,6 @@ namespace FYP.InGame.AI.Environment.Character
                 // vital.rechargeMana(1);
                 GetComponent<DashingGameAgent>().isRechargeMana = 1;
             }
-            else {
-                GetComponent<DashingGameAgent>().isRechargeMana = 0;
-            }
 
             float angle = mouseButtonData.getAngleFromOnTouch(position);
 

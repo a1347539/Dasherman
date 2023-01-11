@@ -92,7 +92,7 @@ namespace FYP.InGame.AI.Environment.Character
 
             // AI Training
             // print($"add reward {deltaManaRawValue}");
-            GetComponent<DashingGameAgent>().AddReward(deltaManaRawValue);
+            GetComponent<DashingGameAgent>().AddReward(AIManager.Instance.microReward);
         }
 
         public void setHealth(int deltaHealth)

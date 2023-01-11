@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static FYP.Global.InputUtilities;
 using CharacterController = FYP.InGame.AI.Environment.Character.CharacterController;
+using static FYP.InGame.AI.Environment.Character.CharacterController;
 
 namespace FYP.InGame.AI.Agent
 {
@@ -43,11 +44,13 @@ namespace FYP.InGame.AI.Agent
 
         public void handleTimerEnd()
         {
+            if (!enabled) return;
             EndEpisode();
         }
 
         public override void OnEpisodeBegin()
         {
+            if (!enabled) return;
             AIManager.Instance.resetEnvironment();
             AIManager.Instance.resetTimer();
         }
@@ -65,9 +68,7 @@ namespace FYP.InGame.AI.Agent
             int selfCellIndex = (int)(p.y * MapController.Instance.playableMapSize.x + p.x);
 
             // add all map states
-            Sensor.processTileMatrix();
-            while (!Sensor.isTileMatrixProcessed) { }
-            List<int> mapStates = Sensor.processedTileMatrix;
+            List<int> mapStates = mySensor.getProcessedTileMap();
             // make the cell the character is on an empty cell, for testing
             mapStates[selfCellIndex] = 0;
             foreach (int state in mapStates)
@@ -81,6 +82,8 @@ namespace FYP.InGame.AI.Agent
             // remove this part and change the conditions below accordingly if on Heuristic
 
             // shouldDoMovingAction, facing, moveDistance, shouldMove, shouldAttack, shouldRechargeMana
+            if (GetComponent<CharacterController>().CharacterState != CharacterStates.idle && GetComponent<CharacterController>().CharacterState != CharacterStates.aiming)
+                return;
 
             if (actions.DiscreteActions[0] == 1) myActuator.changeFacing(actions.DiscreteActions[1]);
 
@@ -89,10 +92,10 @@ namespace FYP.InGame.AI.Agent
                 if (GetComponent<CharacterMovement>().Facing == 2 || GetComponent<CharacterMovement>().Facing == 3) myActuator.move(-actions.DiscreteActions[2]);
                 else myActuator.move(actions.DiscreteActions[2]);
             }
-            if (actions.DiscreteActions[4] == 1) myActuator.attack();
+            //if (actions.DiscreteActions[4] == 1) myActuator.attack();
             if (actions.DiscreteActions[5] == 1) myActuator.rechargeMana();
 
-            // print($"{actions.DiscreteActions[0]}, {actions.DiscreteActions[1]}, {actions.DiscreteActions[2]}, {actions.DiscreteActions[3]}, {actions.DiscreteActions[4]}, {actions.DiscreteActions[5]}");
+            print($"{actions.DiscreteActions[0]}, {actions.DiscreteActions[1]}, {actions.DiscreteActions[2]}, {actions.DiscreteActions[3]}, {actions.DiscreteActions[4]}, {actions.DiscreteActions[5]}");
 
             AddReward(-1f / AIManager.Instance.durationInStep);
         }

@@ -10,41 +10,9 @@ namespace FYP.InGame.AI.Agent
 {
     public class Sensor : MonoBehaviour
     {
-        // observe map
-        public static bool isTileMatrixProcessed = false;
-        public static bool isProcessing = false;
-        public static List<int> processedTileMatrix;
-
-        public static void processTileMatrix()
+        public List<int> getProcessedTileMap()
         {
-            isTileMatrixProcessed = false;
-            isProcessing = false;
-
-            if (isProcessing) { return; }
-            isProcessing = true;
-            processedTileMatrix = new List<int>();
-            List<List<Tile>> tiles = MapController.Instance.tileMatrix;
-            for (int i = 0; i < tiles.Count; ++i)
-            {
-                for (int j = 0; j < tiles[0].Count; ++j)
-                {
-                    int state = (int)tiles[i][j].tileState;
-                    if (state != 3) { processedTileMatrix.Add(state); }
-                    else
-                    {
-                        if (tiles[i][j].currentObjects.Count == 1)
-                        {
-                            processedTileMatrix.Add(tiles[i][j].currentObjects[0].GetComponent<CharacterBuilder>().teamNumber);
-                        }
-                        else
-                        {
-                            // having two character on the same tile is an exception, will treat it as an unbreakable block
-                            processedTileMatrix.Add((int)Tile.TileStates.hasUnbreakable);
-                        }
-                    }
-                }
-            }
-            isTileMatrixProcessed = true;
+            return AIManager.Instance.processedTileMatrix;
         }
 
 

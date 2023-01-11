@@ -112,21 +112,21 @@ namespace FYP.InGame.AI.Environment.Character
 
             List<GameObject> enemiesInPath = getEnemiesInPath(oldPoint, newPoint);
 
-            // AI Training
-            float totalDashingDamage = 0;
-
             foreach (GameObject enemy in enemiesInPath)
             {
                 // if (enemy.Owner == PhotonNetwork.LocalPlayer) continue;
                 // print($"{enemy.Owner.NickName} take damage");
                 enemy.GetComponent<IDamageable>().takeDamage(DashingDamage, DamageType.dashing);
-                totalDashingDamage += DashingDamage;
             }
-            if (totalDashingDamage != 0)
+            if (enemiesInPath.Count != 0)
             {
                 // AI Training
-                print($"add reward {totalDashingDamage}");
-                GetComponent<DashingGameAgent>().AddReward(totalDashingDamage);
+                print($"add reward {AIManager.Instance.reward}");
+                GetComponent<DashingGameAgent>().AddReward(AIManager.Instance.reward);
+            }
+            else {
+                print($"add reward {-AIManager.Instance.microReward}");
+                GetComponent<DashingGameAgent>().AddReward(-AIManager.Instance.microReward);
             }
         }
 
@@ -185,22 +185,21 @@ namespace FYP.InGame.AI.Environment.Character
                 }
             }
 
-            // AI Training
-            float totalWeaponDamage = 0;
-
-
             foreach (GameObject obj in objectsInRange)
             {
                 // sacling already applied
                 obj.GetComponent<IDamageable>().takeDamage(WeaponDamage, DamageType.physicalHit);
-                totalWeaponDamage += WeaponDamage;
             }
 
             // AI Training
-            if (totalWeaponDamage != 0)
+            if (objectsInRange.Count != 0)
             {
-                print($"add reward {totalWeaponDamage}");
-                GetComponent<DashingGameAgent>().AddReward(totalWeaponDamage);
+                print($"add reward {AIManager.Instance.reward}");
+                GetComponent<DashingGameAgent>().AddReward(AIManager.Instance.reward);
+            }
+            else {
+                print($"add reward {-AIManager.Instance.microReward}");
+                GetComponent<DashingGameAgent>().AddReward(-AIManager.Instance.microReward);
             }
         }
     }

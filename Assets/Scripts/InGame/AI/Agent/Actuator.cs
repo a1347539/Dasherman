@@ -16,14 +16,18 @@ namespace FYP.InGame.AI.Agent
         public void move(int distanceToTravel)
         {
             GetComponent<CharacterMovement>().move(distanceToTravel);
+            GetComponent<DashingGameAgent>().isMove = 0;
         }
 
         public void attack() {
+
             GetComponent<CharacterController>().CharacterState = CharacterStates.attacking;
+            GetComponent<DashingGameAgent>().isAttack = 0;
         }
 
         public void rechargeMana() {
             GetComponent<CharacterVital>().rechargeMana();
+            GetComponent<DashingGameAgent>().isRechargeMana = 0;
         }
     }
 }
