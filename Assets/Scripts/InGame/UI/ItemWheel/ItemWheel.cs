@@ -60,7 +60,7 @@ namespace FYP.InGame.UI
             animator = GetComponent<Animator>();
             rectTransform = GetComponent<RectTransform>();
 
-            float radius = GetComponent<RectTransform>().sizeDelta.x/3;
+            float radius = GetComponent<RectTransform>().sizeDelta.x/8;
             WheelSlot[] wss = new WheelSlot[numberOfSlots];
 
             for (int i = 0; i < numberOfSlots; ++i) {

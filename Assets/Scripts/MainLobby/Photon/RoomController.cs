@@ -54,7 +54,7 @@ namespace FYP.MainLobby
 
         public override void OnCreatedRoom()
         {
-            // print("Created room successfully");
+            print("Created room successfully");
         }
 
         public override void OnCreateRoomFailed(short returnCode, string message)

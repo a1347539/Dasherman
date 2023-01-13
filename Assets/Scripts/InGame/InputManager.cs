@@ -76,6 +76,7 @@ namespace FYP.InGame
 
                 if (Input.GetMouseButtonDown(0))
                 {
+                    print(Input.mousePosition);
                     mouseButtonData = new MouseButtonData(Input.mousePosition);
                     onMouseLeftButtonDown?.Invoke(mouseButtonData);
                 }

@@ -55,12 +55,14 @@ namespace FYP.InGame.Photon
             #region debug
             // assume getting player position
             int positionIndex = Random.Range(0, 7);
+            int id = 1015;
             #endregion
 
-            // int positionIndex = (int)getCustomProperty(PhotonNetwork.LocalPlayer, PlayerKeys.Position);
+            //int positionIndex = (int)NetworkUtilities.getCustomProperty(PhotonNetwork.LocalPlayer, PlayerKeys.Position);
+            //int id = (int)NetworkUtilities.getCustomProperty(PhotonNetwork.LocalPlayer, PlayerGlobalCustomProperties.PlayerClassID);
 
-            // int id = (int)NetworkUtilities.getCustomProperty(PhotonNetwork.LocalPlayer, PlayerGlobalCustomProperties.PlayerClassID);
-            ScriptableCharacter sc = charactersDatas.First(data => data.characterId == 1015);
+
+            ScriptableCharacter sc = charactersDatas.First(data => data.characterId == id);
             ScriptableWeapon sw = weaponDatas.First(data => data.weaponID == sc.defaultWeaponID);
 
             GameObject weapon = NetworkUtilities.networkInstantiate(sw.weaponPrefab, Vector2.zero, Quaternion.identity, false);
