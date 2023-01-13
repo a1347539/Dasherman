@@ -21,7 +21,9 @@ namespace FYP.Global
         public const string PlayerGold = "PlayerGold";
         public const string PlayerExp = "PlayerExp";
         public const string PlayerUpgrades = "PlayersUpgrades";
-        
+        public const string PlayerTotalUpgradeInfo = "PlayerTotalUpgradeInfo";
+
+
     }
 
     public static class UserSettingKeys

@@ -27,7 +27,7 @@
 		</node>
 		<node>
 			<id>101</id>
-			<upgradeType>3</upgradeType>
+			<upgradeType>2</upgradeType>
 			<value>0.2</value>
 			<cost>500</cost>
 			<levelRequirement>0</levelRequirement>
@@ -53,7 +53,7 @@
 		</node>
 		<node>
 			<id>102</id>
-			<upgradeType>3</upgradeType>
+			<upgradeType>2</upgradeType>
 			<value>0.1</value>
 			<cost>300</cost>
 			<levelRequirement>0</levelRequirement>
@@ -66,7 +66,7 @@
 		</node>
 		<node>
 			<id>103</id>
-			<upgradeType>3</upgradeType>
+			<upgradeType>2</upgradeType>
 			<value>0.2</value>
 			<cost>500</cost>
 			<levelRequirement>2</levelRequirement>
@@ -78,7 +78,7 @@
 		</node>
 		<node>
 			<id>201</id>
-			<upgradeType>7</upgradeType>
+			<upgradeType>6</upgradeType>
 			<value>0.3</value>
 			<cost>350</cost>
 			<levelRequirement>0</levelRequirement>
@@ -86,17 +86,99 @@
 			<name></name>
 			<description></description>
 			<children>
+				<child>
+					<id>0</id>
+				</child>
+				<child>
+					<id>202</id>
+					<requisite>2</requisite>
+				</child>
+			</children>
+		</node>
+		<node>
+			<id>202</id>
+			<upgradeType>6</upgradeType>
+			<value>0.1</value>
+			<cost>350</cost>
+			<levelRequirement>0</levelRequirement>
+			<maxLevel>1</maxLevel>
+			<name></name>
+			<description></description>
+			<children>
 			</children>
 		</node>
 		<node>
 			<id>301</id>
-			<upgradeType>4</upgradeType>
+			<upgradeType>3</upgradeType>
 			<value>0.2</value>
 			<cost>300</cost>
 			<levelRequirement>0</levelRequirement>
 			<maxLevel>3</maxLevel>
 			<name></name>
 			<description></description>
+			<children>
+				<child>
+					<id>0</id>
+				</child>
+				<child>
+					<id>302</id>
+					<requisite>2</requisite>
+				</child>
+				<child>
+					<id>0</id>
+				</child>
+				<child>
+					<id>303</id>
+					<requisite>2</requisite>
+				</child>
+			</children>
+		</node>
+		<node>
+			<id>302</id>
+			<upgradeType>3</upgradeType>
+			<value>0.1</value>
+			<cost>200</cost>
+			<levelRequirement>2</levelRequirement>
+			<maxLevel>3</maxLevel>
+			<name></name>
+			<description></description>
+			<children>
+			</children>
+		</node>
+		<node>
+			<id>303</id>
+			<upgradeType>3</upgradeType>
+			<value>0.1</value>
+			<cost>200</cost>
+			<levelRequirement>2</levelRequirement>
+			<maxLevel>3</maxLevel>
+			<name></name>
+			<description></description>
+			<children>
+				<child>
+					<id>0</id>
+				</child>
+				<child>
+					<id>0</id>
+				</child>
+				<child>
+					<id>0</id>
+				</child>
+				<child>
+					<id>304</id>
+					<requisite>1</requisite>
+				</child>
+			</children>
+		</node>
+		<node>
+			<id>304</id>
+			<upgradeType>101</upgradeType>
+			<value>10</value>
+			<cost>350</cost>
+			<levelRequirement>0</levelRequirement>
+			<maxLevel>1</maxLevel>
+			<name>Explosion</name>
+			<description>Unlock Skill: Explosion</description>
 			<children>
 			</children>
 		</node>

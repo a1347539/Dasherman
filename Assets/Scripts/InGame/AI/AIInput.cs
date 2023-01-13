@@ -26,7 +26,7 @@ namespace FYP.InGame.AI
 
         private void Start()
         {
-            StartCoroutine(continuousSkillActionCoroutine());
+            StartCoroutine(continuousMoveActionCoroutine());
         }
 
         private void Update()

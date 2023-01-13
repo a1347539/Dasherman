@@ -79,30 +79,33 @@ namespace FYP.Upgrade
                 costArea.SetActive(false);
             }
 
-            switch (data.upgradeType)
-            {
-                case 0:
-                    titleText.text = UpgradeTypeTitles.Skill.ToString();
-                    break;
-                case 1:
-                case 3:
-                case 5:
-                    titleText.text = UpgradeTypeTitles.Strength.ToString();
-                    break;
-                case 4:
-                case 6:
-                    titleText.text = UpgradeTypeTitles.Intelligence.ToString();
-                    break;
-                case 2:
-                case 7:
-                    titleText.text = UpgradeTypeTitles.Dexterity.ToString();
-                    break;
+            if (data.id != 0)
+            { 
+                switch ((UpgradeTypes)data.upgradeType)
+                {
+                    case UpgradeTypes.Skill:
+                        titleText.text = UpgradeTypeTitles.Skill.ToString();
+                        break;
+                    case UpgradeTypes.HealthPoint:
+                    case UpgradeTypes.PhysicalDamage:
+                    case UpgradeTypes.PhysicalDefence:
+                        titleText.text = UpgradeTypeTitles.Strength.ToString();
+                        break;
+                    case UpgradeTypes.MagicDamage:
+                    case UpgradeTypes.MagicDefence:
+                        titleText.text = UpgradeTypeTitles.Intelligence.ToString();
+                        break;
+                    case UpgradeTypes.ManaPoint:
+                    case UpgradeTypes.ManaRegeneration:
+                        titleText.text = UpgradeTypeTitles.Dexterity.ToString();
+                        break;
+                }
             }
 
             levelText.text = $"{node.level}/{data.maxLevel}";
 
             descriptionText.text = $"<style=\"Title\"><b>";
-            if (data.upgradeType == 0)
+            if (data.upgradeType == 101)
             {
                 descriptionText.text += $"{data.name}";
             }

@@ -10,30 +10,30 @@ using System.Linq;
 namespace FYP.Upgrade
 {
     public enum UpgradeTypes {
-        [Description("Skill")]
-        Skill = 0,
         [Description("Health Point")]
-        HealthPoint = 1,
+        HealthPoint = 0,
         [Description("Mana Point")]
-        ManaPoint = 2,
+        ManaPoint = 1,
         [Description("Physical Damage")]
-        PhysicalDamage = 3,
+        PhysicalDamage = 2,
         [Description("Magic Damage")]
-        MagicDamage = 4,
+        MagicDamage = 3,
         [Description("Physical Defence")]
-        PhysicalDefence = 5,
+        PhysicalDefence = 4,
         [Description("Magic Defence")]
-        MagicDefence = 6,
+        MagicDefence = 5,
         [Description("Mana Regeneration")]
-        ManaRegeneration = 7,
+        ManaRegeneration = 6,
+        [Description("Skill")]
+        Skill = 101,
     }
 
     public enum UpgradeTypeTitles
     {
-        Skill = 0,
-        Strength = 1,
-        Dexterity = 2,
-        Intelligence = 3,
+        Strength = 0,
+        Dexterity = 1,
+        Intelligence = 2,
+        Skill = 101,
     }
 
     public class UpgradeNode : MonoBehaviour
@@ -45,11 +45,7 @@ namespace FYP.Upgrade
         [SerializeField]
         private Image background;
         [SerializeField]
-        private Sprite[] sprites;
-        [SerializeField]
         private Button nodeButton;
-
-        public bool isUpgradeable { get; private set; }
 
         #region static
         public int id;
@@ -65,7 +61,7 @@ namespace FYP.Upgrade
         public void initialize(NodeData data, ref bool levelRequirementIsMet) {
             nodeData = data;
             text.text = data.id.ToString();
-            background.sprite = sprites[data.id/100];
+            background.sprite = GraphManager.Instance.nodebackgrounds[data.id/100];
 
             levelRequirementIsMet = UpgradeManager.Instance.playerLevel >= data.levelRequirement;
         }
@@ -81,6 +77,7 @@ namespace FYP.Upgrade
         }
 
         private void onUpgradeNodeClick() {
+            if (id == 0) return;
             GraphManager.onUpgradeNodeClick?.Invoke(nodeData.id);
         }
     }

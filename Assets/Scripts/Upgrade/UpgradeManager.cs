@@ -19,9 +19,13 @@ namespace FYP.Upgrade
                 UIManager.Instance.setGoldText(value);
             } }
 
+        public TotalUpgradeInfo totalUpgradeInfo;
+
         private void Awake()
         {
             GraphManager.onNodeUpgrade += handleNodeUpgrade;
+
+            totalUpgradeInfo = new TotalUpgradeInfo();
         }
 
         private void OnDestroy()
@@ -48,7 +52,14 @@ namespace FYP.Upgrade
 
             // change upgradeLevels
             ++GraphManager.Instance.upgradeLevels.First(ul => ul.id == id).level;
-
+            if (node.nodeData.upgradeType == 101)
+            {
+                totalUpgradeInfo.unlockedSkillId.Add((int)node.value);
+            }
+            else
+            {
+                totalUpgradeInfo.stats[node.nodeData.upgradeType] += node.value;
+            }
             // save data to playfab
             PlayFabUpgradeManager.Instance.saveData();
             onNodeUpgraded?.Invoke(node, PlayerGold >= node.cost, node.level >= node.nodeData.maxLevel);

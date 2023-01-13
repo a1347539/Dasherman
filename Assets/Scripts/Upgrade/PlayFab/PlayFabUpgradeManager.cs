@@ -11,15 +11,17 @@ namespace FYP.Upgrade
     {
         private void Awake()
         {
-            DebugConnection.onConnectedToPlayFab += handleOnConnected;
+            DebugConnection.onConnectedToPlayFab += handleConnected;
+            GraphManager.onGraphCreated += handleSaveInitialUpgradeStats;
         }
 
         private void OnDestroy()
         {
-            DebugConnection.onConnectedToPlayFab -= handleOnConnected;
+            DebugConnection.onConnectedToPlayFab -= handleConnected;
+            GraphManager.onGraphCreated -= handleSaveInitialUpgradeStats;
         }
 
-        private void handleOnConnected() {
+        private void handleConnected() {
             PlayFabClientAPI.GetUserData(new GetUserDataRequest()
             {
                 Keys = new List<string> {
@@ -59,18 +61,19 @@ namespace FYP.Upgrade
             }
             else
             {
-                initializeUpgradeLevelsInPlayFab();
+                initializeUpgradeLevelInPlayFab();
             }
         }
 
-        private void initializeUpgradeLevelsInPlayFab() {
+        private void initializeUpgradeLevelInPlayFab() {
             List<UpgradeLevel> levels = new List<UpgradeLevel>();
+
             // initialize data in playfab
             foreach (NodeData data in GraphManager.Instance.adjacencyList.nodes) levels.Add(new UpgradeLevel(data.id, 0));
             PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest()
             {
                 Data = new Dictionary<string, string> {
-                    { PlayFabKeys.PlayerUpgrades, JsonUtilities.serialize(levels) }
+                    { PlayFabKeys.PlayerUpgrades, JsonUtilities.serialize(levels) },
                 }
             }, result => { 
                 print("successful save data"); 
@@ -86,11 +89,24 @@ namespace FYP.Upgrade
                 Data = new Dictionary<string, string> {
                     { PlayFabKeys.PlayerUpgrades, JsonUtilities.serialize(GraphManager.Instance.upgradeLevels) },
                     { PlayFabKeys.PlayerGold, UpgradeManager.Instance.PlayerGold.ToString() },
+                    { PlayFabKeys.PlayerTotalUpgradeInfo, JsonUtilities.serialize(UpgradeManager.Instance.totalUpgradeInfo) }
                 }
             }, result => { print("successful save data"); },
                 onError
                 );
         }
+
+        private void handleSaveInitialUpgradeStats() {
+            PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest()
+            {
+                Data = new Dictionary<string, string> {
+                    { PlayFabKeys.PlayerTotalUpgradeInfo, JsonUtilities.serialize(UpgradeManager.Instance.totalUpgradeInfo) },
+                }
+            }, result => { print("successful save data"); },
+            onError
+            );
+        }
+
 
         public void onError(PlayFabError obj)
         {

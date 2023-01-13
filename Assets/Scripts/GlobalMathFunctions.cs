@@ -15,7 +15,7 @@ namespace FYP.Global
             return baseCost * (Mathf.Log(level+1) + 1);
         }
 
-        public static float upgradeValueByUpgradeLevel(int baseValue, int level) { 
+        public static float upgradeValueByUpgradeLevel(float baseValue, int level) { 
             return (float)Math.Round(baseValue * (Mathf.Log(level + 1) + 1), 2);
         }
     }
