@@ -17,10 +17,9 @@ https://aka.ms/PlayFabUnityEdEx
 
 ## Toggle instant In-Game mode
 To start the game in the InGame scene right away 
-- InGame.PlayerInstance.Character.cs: uncomment line 73 
-- InGame.Photon.MapObjectManager.cs: uncomment line 62, comment line 66
-- InGame.Photon.RoomController.cs: uncomment line 20 & 26, comment line 19 & 25
-- enable the GameObject "DebugConnection" in the Hierarchy \
+- InGame.Photon.MapObjectManager.cs: uncomment line 57 & 58, comment line 61 & 62
+- InGame.Photon.RoomController.cs: uncomment line 28 & 34, comment line 27 & 33
+- enable the GameObject "DebugConnection", disable "PhotonTeamManager" in the "InGame" scene \
 Now, all characters are not in the same team of each other.
 
 ## Credit
