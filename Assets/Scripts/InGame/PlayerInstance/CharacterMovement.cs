@@ -19,8 +19,6 @@ namespace FYP.InGame.PlayerInstance
         [SerializeField]
         private DirectionIndicator directionIndicator;
 
-        public Action<int> onFacingChanged = delegate { };
-
         private CharacterBuilder builder;
         private CharacterController controller;
         private CharacterVital vital;
@@ -295,6 +293,7 @@ namespace FYP.InGame.PlayerInstance
             }
             calculateDraggedDistanceForMouseControl(facing, mouseButtonData, position);
         }
+
         private void calculateDraggedDistanceForMouseControl(int facing, MouseButtonData mouseButtonData, Vector2 position)
         {
             // facing vertical direction 

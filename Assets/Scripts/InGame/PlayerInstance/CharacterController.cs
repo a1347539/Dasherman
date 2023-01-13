@@ -77,8 +77,8 @@ namespace FYP.InGame.PlayerInstance
             if (photonView.IsRoomView) return;
             if (InputManager.Instance.isTouchControl)
             {
-                InputManager.onTouchDown += handleMouseLeftButtonDown;
-                InputManager.onTouchUp += handleMouseLeftButtonUp;
+                InputManager.onTouchDown += handleSingleTouchDown;
+                InputManager.onTouchUp += handleSingleTouchUp;
             }
             else
             {
@@ -91,8 +91,8 @@ namespace FYP.InGame.PlayerInstance
         private void OnDestroy()
         {
             if (!photonView.IsMine) return;
-            InputManager.onTouchDown -= handleMouseLeftButtonDown;
-            InputManager.onTouchUp -= handleMouseLeftButtonUp;
+            InputManager.onTouchDown -= handleSingleTouchDown;
+            InputManager.onTouchUp -= handleSingleTouchUp;
 
             InputManager.onMouseLeftButtonDown -= handleMouseLeftButtonDown;
             InputManager.onMouseLeftButtonUp -= handleMouseLeftButtonUp;
@@ -163,7 +163,7 @@ namespace FYP.InGame.PlayerInstance
             }
         }
 
-        private void handleMouseLeftButtonDown(Touch t)
+        private void handleSingleTouchDown(Touch t)
         {
             if (t.fingerId == 0)
             {
@@ -174,7 +174,7 @@ namespace FYP.InGame.PlayerInstance
             }
         }
 
-        private void handleMouseLeftButtonUp(Touch t)
+        private void handleSingleTouchUp(Touch t)
         {
             if (t.fingerId == 0)
             {

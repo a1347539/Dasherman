@@ -42,7 +42,7 @@ namespace FYP.InGame.PlayerInstance
         public bool isInitialized = false;
 
         #region AI
-        public AIInput aiInput { get; private set; }
+        public AIInputTester aiInput { get; private set; }
         #endregion
 
 

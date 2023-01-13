@@ -108,8 +108,8 @@ namespace FYP.Global
     {
         public static class MapKeys 
         {
-            public static string mapReachableTage = "map.reachable";
-            public static string mapUnreachableTage = "map.unreachable";
+            public static string mapReachableTag = "map.reachable";
+            public static string mapUnreachableTag = "map.unreachable";
             public static string scriptableMapPathPrefix = "InGame";
             public static string networkObjectPathPrefix = "InGame" + Path.DirectorySeparatorChar + "Map";
         }
@@ -129,6 +129,11 @@ namespace FYP.Global
         public static class AIKeys 
         {
             public static int AITeamNumber = 101;
+
+            public static string AIEnvironmentPathPrefix = "AI" + Path.DirectorySeparatorChar + "Environment";
+
+            public static string scriptableCharacterPathPrefix = "AI" + Path.DirectorySeparatorChar + "Agent";
+            public static string scriptableWeaponPathPrefix = "AI" + Path.DirectorySeparatorChar + "Weapon";
         }
 
         public static class PlayerItemKeys 
