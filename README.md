@@ -30,3 +30,6 @@ starline: https://www.freepik.com/author/starline \
 
 todo:
 upgrade page
+AI training environment
+RL training
+test the synchronization of the multiplayer function
