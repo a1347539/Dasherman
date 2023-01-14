@@ -1463,6 +1463,8 @@ MonoBehaviour:
   uiManager: {fileID: 6580993329044888673}
   avatarSpriteRenderer: {fileID: 3234852149464128513}
   healthBar: {fileID: 1132424745603008457}
+  currentMana: 0
+  currentManaRaw: 0
   rawPhysicalDefenceScaling: 0
   rawMagicDefenceScaling: 0
 --- !u!114 &571728857700776224
@@ -1640,7 +1642,6 @@ MonoBehaviour:
   sprite: {fileID: 6579093431230282111}
   indicatorCanvas: {fileID: 9094201021884997086}
   overlayCanvas: {fileID: 8891098092989699693}
-  PlayerCanvas: {fileID: 0}
   teamIndicator: {fileID: 6611028560444074428}
   teleportEffect: {fileID: 148858097718599700}
 --- !u!1 &7410622343855505365

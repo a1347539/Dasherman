@@ -1003,7 +1003,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.8245209, y: 0.9267778}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.6948242, y: 0.16549683}
+  m_AnchoredPosition: {x: 0.6948242, y: 0.16552734}
   m_SizeDelta: {x: -1.389801, y: -0.3312}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1136744119
@@ -1125,6 +1125,11 @@ MonoBehaviour:
   nodeContainer: {fileID: 562570685}
   lineContainer: {fileID: 898178654}
   upgradeNodePrefab: {fileID: 9158144415720485575, guid: 571b888425d4b664f84ff5bcd0081200, type: 3}
+  nodebackgrounds:
+  - {fileID: -431190564, guid: b73f4563fe0380b4f8290c5a8871a66a, type: 3}
+  - {fileID: -195795518, guid: 67ea23d71323e474d9cd2b37e1493518, type: 3}
+  - {fileID: -1453432743, guid: ba4aac618f879c9499c7075d6973fef4, type: 3}
+  - {fileID: 652047493, guid: f0ee50ba4eba1904faf87a83a0c17fd6, type: 3}
   graphDatas: []
 --- !u!1 &1390140179
 GameObject:

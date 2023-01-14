@@ -10,6 +10,7 @@ namespace FYP.Upgrade
 {
     public class GraphManager : Singleton<GraphManager>
     {
+        public static Action onGraphCreated = delegate { };
         public static Action<int> onUpgradeNodeClick = delegate { };
         public static Action<int> onNodeUpgrade = delegate { };
 
@@ -21,6 +22,8 @@ namespace FYP.Upgrade
         public Transform lineContainer;
         [SerializeField]
         public GameObject upgradeNodePrefab;
+        [SerializeField]
+        public List<Sprite> nodebackgrounds;
 
         public TextAsset[] graphDatas;
 

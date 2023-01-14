@@ -12,6 +12,7 @@ namespace FYP.Upgrade
     {
         private Node root;
         private int radius;
+        private List<float> radiansOffset = new List<float>();
 
         public class Node {
             public List<Node> parents = new List<Node>();
@@ -23,7 +24,7 @@ namespace FYP.Upgrade
             public int level { get; private set; }
             public NodeData nodeData { get; private set; }
             public int cost { get { return (int)GlobalMathFunctions.upgradeCostByUpgradeLevel(nodeData.cost, level); } }
-            public float value { get { return GlobalMathFunctions.upgradeValueByUpgradeLevel(nodeData.cost, level); } }
+            public float value { get { return GlobalMathFunctions.upgradeValueByUpgradeLevel(nodeData.value, level); } }
 
             public Node(int id, Vector2 position) {
                 this.id = id;
@@ -37,6 +38,20 @@ namespace FYP.Upgrade
             public void lateInitialize(NodeData data, int level) {
                 nodeData = data;
                 this.level = level;
+                if (data.id != 0)
+                {
+                    if (data.upgradeType == 101)
+                    {
+                        if (level == data.maxLevel) {
+                            UpgradeManager.Instance.totalUpgradeInfo.unlockedSkillId.Add((int)data.value);
+                        }
+                    }
+                    else
+                    {
+                        UpgradeManager.Instance.totalUpgradeInfo.stats[data.upgradeType] += value;
+                    }
+                }
+                
                 prefab.GetComponent<UpgradeNode>().initialize(data, ref levelRequirementIsMet);
             }
             public void reInitialize(int level) {
@@ -61,6 +76,7 @@ namespace FYP.Upgrade
         }
 
         public void createGraph(AdjacencyList adjacencyList, List<UpgradeLevel> upgradeLevels) {
+
             createRoot(adjacencyList.nodes[0]);
             int closeness = 17;
             float radiansDivided = 2 * Mathf.PI / closeness;
@@ -75,21 +91,22 @@ namespace FYP.Upgrade
                 print($"{adjacencyList.nodes[i].id} has {adjacencyList.nodes[i].children.Count(child => child.id != 0)} non-zero children");
                 for (int j = 0; j < adjacencyList.nodes[i].children.Count; ++j)
                 {
+                    int childId = adjacencyList.nodes[i].children[j].id;
                     if (adjacencyList.nodes[i].children[j].id == 0) continue;
-                    if (GraphManager.Instance.intNodePair.ContainsKey(adjacencyList.nodes[i].children[j].id))
+                    if (GraphManager.Instance.intNodePair.ContainsKey(childId))
                     {
-                        addEdge(root, GraphManager.Instance.intNodePair[adjacencyList.nodes[i].children[j].id]);
+                        addEdge(root, GraphManager.Instance.intNodePair[childId]);
                         continue;
                     }
-                    radians = radiansDivided * (2 * (j - 2) % closeness);
+                    radians = radiansDivided * (2 * (j - 2) % closeness) + radiansOffset[(childId / 100) - 1];
                     horizontal = Mathf.Sin(radians);
                     vertical = Mathf.Cos(radians);
                     Vector3 vectorFromOrigin = new Vector2(horizontal, vertical) * radius;
                     Vector3 pos = root.prefab.transform.position + vectorFromOrigin;
-                    addEdge(root, new Node(adjacencyList.nodes[i].children[j].id, pos));
+                    addEdge(root, new Node(childId, pos));
                 }
             }
-
+            GraphManager.onGraphCreated?.Invoke();
         }
 
         private void createRoot(NodeData firstNode) {
@@ -105,6 +122,7 @@ namespace FYP.Upgrade
             {
                 // the first node branch away evenly, thats why it is divided by 3
                 radians = radiansDivided * i;
+                radiansOffset.Add(radians);
                 vertical = Mathf.Cos(radians);
                 horizontal = Mathf.Sin(radians);
                 Vector3 vectorFromOrigin = new Vector2(horizontal, vertical) * radius;
