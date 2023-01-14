@@ -36,14 +36,8 @@
 			<description></description>
 			<children>
 				<child>
-					<id>0</id>
-				</child>
-				<child>
 					<id>102</id>
 					<requisite>2</requisite>
-				</child>
-				<child>
-					<id>0</id>
 				</child>
 				<child>
 					<id>103</id>
