@@ -36,8 +36,16 @@
 			<description></description>
 			<children>
 				<child>
+					<id>0</id>
+					<requisite>0</requisite>
+				</child>
+				<child>
 					<id>102</id>
 					<requisite>2</requisite>
+				</child>
+				<child>
+					<id>0</id>
+					<requisite>0</requisite>
 				</child>
 				<child>
 					<id>103</id>
@@ -55,7 +63,18 @@
 			<name></name>
 			<description></description>
 			<children>
-
+				<child>
+					<id>0</id>
+					<requisite>0</requisite>
+				</child>
+				<child>
+					<id>0</id>
+					<requisite>0</requisite>
+				</child>
+				<child>
+					<id>111</id>
+					<requisite>3</requisite>
+				</child>
 			</children>
 		</node>
 		<node>
@@ -68,8 +87,101 @@
 			<name></name>
 			<description></description>
 			<children>
+				<child>
+					<id>0</id>
+					<requisite>0</requisite>
+				</child>
+				<child>
+					<id>0</id>
+					<requisite>0</requisite>
+				</child>
+				<child>
+					<id>112</id>
+					<requisite>3</requisite>
+				</child>
 			</children>
 		</node>
+		<node>
+			<id>111</id>
+			<upgradeType>6</upgradeType>
+			<value>0.3</value>
+			<cost>450</cost>
+			<levelRequirement>0</levelRequirement>
+			<maxLevel>3</maxLevel>
+			<name></name>
+			<description></description>
+			<children>
+				<child>
+					<id>0</id>
+					<requisite>0</requisite>
+				</child>
+				<child>
+					<id>0</id>
+					<requisite>0</requisite>
+				</child>
+				<child>
+					<id>0</id>
+					<requisite>0</requisite>
+				</child>
+				<child>
+					<id>121</id>
+					<requisite>0</requisite>
+				</child>
+			</children>
+		</node>
+		<node>
+			<id>112</id>
+			<upgradeType>6</upgradeType>
+			<value>0.3</value>
+			<cost>450</cost>
+			<levelRequirement>0</levelRequirement>
+			<maxLevel>3</maxLevel>
+			<name></name>
+			<description></description>
+			<children>
+				<child>
+					<id>0</id>
+					<requisite>0</requisite>
+				</child>
+				<child>
+					<id>121</id>
+					<requisite>0</requisite>
+				</child>
+				<child>
+					<id>0</id>
+					<requisite>0</requisite>
+				</child>
+				<child>
+					<id>122</id>
+					<requisite>0</requisite>
+				</child>
+			</children>
+		</node>
+		<node>
+			<id>121</id>
+			<upgradeType>6</upgradeType>
+			<value>0.3</value>
+			<cost>350</cost>
+			<levelRequirement>0</levelRequirement>
+			<maxLevel>3</maxLevel>
+			<name></name>
+			<description></description>
+			<children>
+			</children>
+		</node>
+		<node>
+			<id>122</id>
+			<upgradeType>6</upgradeType>
+			<value>0.3</value>
+			<cost>350</cost>
+			<levelRequirement>0</levelRequirement>
+			<maxLevel>3</maxLevel>
+			<name></name>
+			<description></description>
+			<children>
+			</children>
+		</node>
+		
 		<node>
 			<id>201</id>
 			<upgradeType>6</upgradeType>
